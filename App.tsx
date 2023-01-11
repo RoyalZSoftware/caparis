@@ -3,13 +3,17 @@ import LoginScreen from './src/screens/login';
 
 import * as fireorm from 'fireorm';
 import firestore from '@react-native-firebase/firestore';
+import { UserContextProvider } from './src/infrastructure/user-context';
 
 export default function App() {
   fireorm.initialize(firestore());
+
   return (
-    <View style={styles.container}>
-      <LoginScreen></LoginScreen>
-    </View>
+    <UserContextProvider>
+      <View style={styles.container}>
+        <LoginScreen></LoginScreen>
+      </View>
+    </UserContextProvider>
   );
 }
 

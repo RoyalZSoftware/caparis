@@ -18,7 +18,7 @@ export function useProductProvider() {
     const repository = getRepository(Product);
 
     const getAllProductsForUser = (user: FirebaseAuthTypes.User, limit?: number) => {
-        return from(repository.limit(limit).whereEqualTo('createdById', user?.uid).find());
+        return from(repository.limit(limit).whereEqualTo('createdById', user.uid).find());
     }
 
     const createProduct = (product: Product) => {
