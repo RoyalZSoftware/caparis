@@ -5,43 +5,45 @@ import useFirebaseAuth from "../data-provider/firebase-auth";
 import { getRepository } from 'fireorm';
 
 import { from } from "rxjs";
-import { Product } from "../data-provider/models/product";
-Product
+import { Product, useProductProvider } from "../data-provider/models/product";
 import List from "../components/list";
 import { ProductListItem } from "../components/product-list-item";
 
 export default function LoginScreen() {
     
     const auth = useFirebaseAuth();
+    const productProvider = useProductProvider();
 
     const [products, setProducts] = useState<Product[]>();
 
     useEffect(() => {
-        const repository = getRepository(Product);
-        from(repository.find()).subscribe((products: Product[]) => {
-            setProducts(products);
-        })
+    
+        auth.signIn().then((data) => {
+            console.log(data.user.uid);
+            productProvider.getAllProductsForUser(data.user).subscribe((p) => {
+                setProducts(p);
+            });
+        });
+
     }, []);
 
     return (
-    <View>
-        <Text>{auth.user?.email ?? 'Nicht angemeldet' }</Text>
         <View>
-            <List items={products?.map(c => new ProductListItem(c))}></List>
-        </View>
-        <Button title={'Hallo'} onPress={() => {
-            const pr = new Product();
-            pr.name = "Test";
-            pr.barcodeIdentifier = '123';
-            pr.expiryDate = new Date().toString();
+            <Text>{auth.user?.email ?? 'Nicht angemeldet'}</Text>
+            <View>
+                <List items={products?.map(c => new ProductListItem(c))}></List>
+            </View>
+            <Button title={'Hallo'} onPress={() => {
+                productProvider.createProduct(new Product(
+                    "Test",
+                    "123",
+                    new Date(),
+                    auth.user.uid
+                )).subscribe((p) => {
+                    setProducts([]);
+                });
 
-            getRepository(Product).create(pr).then(() => {
-                console.log("Created!");
-            }).catch((error) => {
-                console.log(error);
-            });
-
-        }}></Button>
-    </View>);
+            }}></Button>
+        </View>);
 
 }

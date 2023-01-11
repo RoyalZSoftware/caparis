@@ -4,8 +4,7 @@ import { ListItem } from "./list";
 
 export class ProductListItem implements ListItem {
     
-    constructor(private _product: Product) {
-    }
+    constructor(private _product: Product) { }
 
     render() {
         return (
