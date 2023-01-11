@@ -19,6 +19,7 @@ export default function LoginScreen() {
 
     return (
         <View>
+            <Button onPress={() => auth.signOut()} title={'Sign out'}></Button>
             <Text>{auth.user?.email ?? 'Nicht angemeldet'}</Text>
             <Inventory></Inventory>
         </View>);
