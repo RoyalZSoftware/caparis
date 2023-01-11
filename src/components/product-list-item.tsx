@@ -10,7 +10,7 @@ export class ProductListItem implements ListItem {
         return (
             <View style={{marginBottom: 10}}>
                 <Text>{this._product.name}</Text>
-                <Text>{new Date(this._product.expiryDate).getFullYear()}</Text>
+                <Text>{new Date(this._product.expiryDate).toISOString()}</Text>
             </View>
         );
     }
