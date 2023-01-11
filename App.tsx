@@ -1,11 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import LoginScreen from './src/screens/login';
+
+import * as fireorm from 'fireorm';
+import firestore from '@react-native-firebase/firestore';
 
 export default function App() {
+  fireorm.initialize(firestore());
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <LoginScreen></LoginScreen>
     </View>
   );
 }
