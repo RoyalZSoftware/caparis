@@ -13,8 +13,8 @@ export default function useFirebaseAuth() {
         if (initializing) setInitializing(false);
     });
 
-    const signIn = () => {
-        return from(auth().signInWithEmailAndPassword('panov@royalzsoftware.de', 'Test123')).pipe(tap((userResponse) => {
+    const signIn = (email, password) => {
+        return from(auth().signInWithEmailAndPassword(email, password)).pipe(tap((userResponse) => {
             setUser(userResponse.user);
         }));
     }

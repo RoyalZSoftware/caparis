@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Text, View } from "react-native";
+import { ExitStatus } from "typescript";
 import Button from "../components/button";
 import List from "../components/list";
 import { ProductListItem } from "../components/product-list-item";
@@ -17,15 +18,23 @@ export default function Inventory() {
     const [allProducts, setAllProducts] = useState([]);
 
     const refreshProductList = () => {
-        productProvider.getAllProductsForUser(auth.user)
-            .subscribe((products) => {
-                setAllProducts(products);
-                setLoading(false);
-            });
+        if (auth.user)
+            productProvider.getAllProductsForUser(auth.user)
+                .subscribe((products) => {
+                    setAllProducts(products);
+                    setLoading(false);
+                });
     }
 
     const createProduct = (name: string, expiryDate: Date) => {
-        productProvider.createProduct(new Product(name, expiryDate.toString(), new Date(), auth.user.uid)).subscribe(() => {
+        const product = new Product();
+
+        product.name = name;
+        product.barcodeIdentifier = "BarCodeIdentifier";
+        product.expiryDate = expiryDate;
+        product.createdById = auth.user.uid;
+
+        productProvider.createProduct(product).subscribe(() => {
             refreshProductList();
         });
     }

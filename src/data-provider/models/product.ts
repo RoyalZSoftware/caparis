@@ -1,16 +1,15 @@
-import { Collection, getRepository } from "fireorm";
+import { Collection, getRepository as gFR } from "fireorm";
+import { getRepository } from '../../infrastructure/mockable-repository';
 import { from } from "rxjs";
 import { UserScopedModel } from "./user-scoped";
 import { FirebaseAuthTypes } from "@react-native-firebase/auth";
 
 @Collection('Products')
 export class Product extends UserScopedModel {
-
     public id: string;
-
-    constructor(public name: string, public barcodeIdentifier: string, public expiryDate: Date, public createdById: string) {
-        super();
-    }
+    public name: string;
+    public barcodeIdentifier: string;
+    public expiryDate: Date;
 }
 
 export function useProductProvider() {
