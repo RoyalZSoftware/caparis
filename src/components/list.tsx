@@ -1,14 +1,15 @@
+import { Component } from "react";
 import { View } from "react-native";
 
-export interface ListItem {
-    render();
+export abstract class ListItem<T> extends Component<{item: T}> {
+    abstract render();
 }
 
-export interface ListProperties {
-    items: ListItem[];
+export interface ListProperties<T> {
+    items: ListItem<any>[];
 };
 
-export default function List({items}: ListProperties) {
+export default function List<T>({items}: ListProperties<T>) {
     return (
         <View>
             {items?.map(c => c.render())}
