@@ -25,6 +25,7 @@ export class ProductListItemBase extends ListItem<Product> {
 export class ExpireNextProductListItem extends ProductListItemBase {
     render() {
         console.log(this.props.item);
+
         return (
             <View style={{ marginBottom: 10 }}>
                 <View style={{ backgroundColor: '#F2F2F2', borderRadius: 8, padding: 12, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -36,7 +37,7 @@ export class ExpireNextProductListItem extends ProductListItemBase {
 
                         <View style={{ display: 'flex', flexDirection: 'row' }}>
                             <Text type='default' style={{ opacity: 0.5 }}>Exp: </Text>
-                            <Text color='primary' type='default'>3 Days</Text>
+                            <Text color='primary' type='default'>{this.props.item.willExpireSoon ? 'true': 'false'}</Text>
                         </View>
                     </View>
                 </View>

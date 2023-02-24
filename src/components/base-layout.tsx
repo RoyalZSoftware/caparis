@@ -42,8 +42,11 @@ export class WithHeader extends Component<{ headerChild: any }> {
     }
 }
 
-export default function BaseLayout(props: { headerChild: any, children: any }) {
-    const header = new WithHeader(props);
+export default function BaseLayout(props: { headerChild?: any, children?: any }) {
+    
+    const emptyHeader = {headerChild: <></>};
+
+    const header = new WithHeader(emptyHeader);
 
     return (<View style={{ backgroundColor: '#F2F2F2', height: '100%' }}>
         {header.render()}

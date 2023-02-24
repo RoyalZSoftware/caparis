@@ -1104,14 +1104,14 @@ PODS:
     - React-jsi (= 0.70.5)
     - React-logger (= 0.70.5)
     - React-perflogger (= 0.70.5)
-  - RNFBApp (16.5.0):
+  - RNFBApp (16.7.0):
     - Firebase/CoreOnly (= 10.3.0)
     - React-Core
-  - RNFBAuth (16.5.0):
+  - RNFBAuth (16.7.0):
     - Firebase/Auth (= 10.3.0)
     - React-Core
     - RNFBApp
-  - RNFBFirestore (16.5.0):
+  - RNFBFirestore (16.7.0):
     - Firebase/Firestore (= 10.3.0)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - React-Core
@@ -1357,9 +1357,9 @@ SPEC CHECKSUMS:
   React-RCTVibration: 8e5c8c5d17af641f306d7380d8d0fe9b3c142c48
   React-runtimeexecutor: 7401c4a40f8728fd89df4a56104541b760876117
   ReactCommon: c9246996e73bf75a2c6c3ff15f1e16707cdc2da9
-  RNFBApp: 9295dac8a4e8857918bcff90328b197807ee0dc1
-  RNFBAuth: 751f700af31914ed7cf1ec401066f884834fe5de
-  RNFBFirestore: 90f51e71ff11fbe2e8cb7760e57050c2a2961dbd
+  RNFBApp: aecfcdc0964d9bc0c5f7ba05efb50be724d8e8b3
+  RNFBAuth: e9d85018f54b3eb50f5031e2d76a833943b14205
+  RNFBFirestore: acc94fe644f02ea746bc0e0bb9016f5ce548abdf
   RNGoogleSignin: c1b1b68a6f15c7cfbd3debbd1bdd605344c05652
   Yoga: eca980a5771bf114c41a754098cd85e6e0d90ed7
 

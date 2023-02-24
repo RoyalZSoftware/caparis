@@ -1,0 +1,15 @@
+{
+  "spec_dir": "spec",
+  "spec_files": [
+    "**/*[sS]pec.?(m)ts?(x)"
+  ],
+  "helpers": [
+    "helpers/**/*.?(m)ts?(x)",
+    "helpers/babel.ts?(x)",
+    "helpers/**/*.ts?(x)"
+  ],
+  "env": {
+    "stopSpecOnExpectationFailure": false,
+    "random": true
+  }
+}

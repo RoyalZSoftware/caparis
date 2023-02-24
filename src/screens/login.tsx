@@ -12,7 +12,6 @@ export default function LoginScreen() {
     const auth = useFirebaseAuth();
 
     const submitPressed = (values) => {
-        console.log(values);
         auth.signIn(values.email, values.password);
     }
     if (auth.user?.email === undefined)
