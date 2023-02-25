@@ -1,12 +1,17 @@
+const { defaults: tsjPreset } = require('ts-jest/presets')
+
+/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-  roots: ['<rootDir>'],
+  preset: 'react-native',
   transform: {
-    "^.+\\.ts?$": "ts-jest",
-    "^.+\\.tsx?$": "ts-jest"
+    '^.+\\.jsx$': 'babel-jest',
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        tsconfig: 'tsconfig.spec.json',
+      },
+    ],
   },
-  preset: "react-native",
-  testRegex: '/spec/.*|(\\.|/)(test|spec)\\.[jt]sx',
-  moduleFileExtensions: ['ts', 'js', 'json', 'node', 'tsx'],
-  clearMocks: true
-};
- 
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"]
+}

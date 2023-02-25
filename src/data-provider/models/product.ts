@@ -1,8 +1,9 @@
-import { Collection, getRepository as gFR } from "fireorm";
+import { Collection} from "fireorm";
 import { getRepository } from '../../infrastructure/mockable-repository';
 import { from } from "rxjs";
 import { UserScopedModel } from "./user-scoped";
-import { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import { useContext } from "react";
+import { UserContext } from "../../infrastructure/user-context";
 
 @Collection('Product')
 export class Product extends UserScopedModel {
@@ -41,8 +42,9 @@ export class Product extends UserScopedModel {
 export function useProductProvider() {
     const repository = getRepository(Product);
 
-    const getAllProductsForUser = (user: FirebaseAuthTypes.User, limit?: number) => {
-        return from(repository.limit(limit).whereEqualTo('createdById', user.uid).find());
+    const {user} = useContext(UserContext);
+    const getAllProductsForUser = (userUid: string = user.uid, limit?: number) => {
+        return from(repository.limit(limit).whereEqualTo('createdById', userUid).find());
     }
 
     const createProduct = (product: Product) => {

@@ -19,7 +19,7 @@ const createProduct = defineProductFactory();
 
 describe('Product', () => {
     it('has a field for prettified expiry date', () => {
-        const product = createProduct({expiryDate: new Date(Date.now() + 3)});
+        const product = createProduct({expiryDate: new Date(Date.now() + 3.1)});
         expect(product.expireInDays).toEqual(3);
     });
 

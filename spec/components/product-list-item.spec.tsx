@@ -1,12 +1,11 @@
 import 'react';
-import { render } from '@testing-library/react-native';
-import { Text } from "../../src/components/text";
-import HomeScreen from '../../src/screens/home';
+import { render, screen, waitFor } from '@testing-library/react-native';
+import { Text } from 'react-native';
 
 describe('ProductListItem', () => {
     it('Renders', () => {
+        render(<Text testID={'text'}>Hallo</Text>);
 
-        render(<Text type='action' children={<></>}></Text>)
-        expect(false).toEqual(false);
+        expect(screen.getByTestId('text')).toHaveTextContent('Hallo');
     })
 });

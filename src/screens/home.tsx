@@ -8,26 +8,16 @@ import BaseLayout from "../components/base-layout";
 import { RecipeListItem } from "../components/product-list-item";
 import { Text } from "../components/text";
 import { ExpireNextWidget } from "../components/widgets/expire-next";
-import LoginScreen from './login';
 
 export default function HomeScreen() {
 
-    const { getAllProductsForUser } = useProductProvider();
-
-    const { user } = useContext(UserContext);
-
-    if (user == undefined) {
-        return (
-            <BaseLayout>
-                <LoginScreen></LoginScreen>
-            </BaseLayout>
-        );
-    }
-
     const [products, setProducts] = useState([]);
 
+
+    const {getAllProductsForUser} = useProductProvider();
+
     useEffect(() => {
-        getAllProductsForUser(user).pipe(tap((retrievedProducts) => {
+        getAllProductsForUser().pipe(tap((retrievedProducts) => {
             setProducts(retrievedProducts);
         })).subscribe();
     }, []);
