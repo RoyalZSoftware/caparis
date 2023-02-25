@@ -5,6 +5,7 @@ import WelcomeLogo from '../assets/welcome-logo.png';
 import { Text } from "./text";
 import { theme } from "../infrastructure/theme";
 import { Recipe } from "../data-provider/models/recipe";
+import { formatDistanceToNow } from "date-fns";
 
 export class ProductListItemBase extends ListItem<Product> {
 
@@ -25,6 +26,8 @@ export class ProductListItemBase extends ListItem<Product> {
 export class ExpireNextProductListItem extends ProductListItemBase {
     render() {
         console.log(this.props.item);
+        
+        const { item } = this.props;
 
         return (
             <View style={{ marginBottom: 10 }}>
@@ -33,11 +36,11 @@ export class ExpireNextProductListItem extends ProductListItemBase {
                         source={{ uri: 'https://images.openfoodfacts.org/images/products/807/680/951/3722/front_de.163.400.jpg' }}
                         style={{ width: 32, height: 32, borderRadius: 6, marginRight: 16 }} />
                     <View style={{ display: 'flex', justifyContent: 'space-between', flexGrow: 2, flexDirection: 'row' }}>
-                        <Text type='listItem' style={{ marginRight: theme.spacing.s }}>{this.props.item.name}</Text>
+                        <Text type='listItem' style={{ marginRight: theme.spacing.s }}>{item.quantity}x {item.name}</Text>
 
                         <View style={{ display: 'flex', flexDirection: 'row' }}>
                             <Text type='default' style={{ opacity: 0.5 }}>Exp: </Text>
-                            <Text color='primary' type='default'>{this.props.item.willExpireSoon ? 'true': 'false'}</Text>
+                            <Text color={item.decorate().expiryDateColor} type='default'>{formatDistanceToNow(item.expiryDate)}</Text>
                         </View>
                     </View>
                 </View>

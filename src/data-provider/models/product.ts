@@ -1,11 +1,11 @@
 import { Collection} from "fireorm";
 import { getRepository } from '../../infrastructure/mockable-repository';
 import { from } from "rxjs";
+import { differenceInDays} from 'date-fns';
 import { UserScopedModel } from "./user-scoped";
-import { useContext } from "react";
-import { UserContext } from "../../infrastructure/user-context";
 
-@Collection('Product')
+
+@Collection('Products')
 export class Product extends UserScopedModel {
     public id: string;
     public name: string;
@@ -22,28 +22,39 @@ export class Product extends UserScopedModel {
     }
 
     public get willExpireSoon(): boolean {
-        return this.expireInDays <= 3;
+        return this._calculateDaysBetweenExpiryAndNow() <= 3;
+    }
+
+    protected _calculateDaysBetweenExpiryAndNow(): number {
+        return differenceInDays(this.expiryDate, new Date(Date.now())) + 1;
+    }
+
+    public decorate() {
+        return new ProductPresenter(this);
+    }
+}
+
+class ProductPresenter extends Product {
+    
+    constructor(public product: Product) {
+        super()
+        Object.assign(this, product);
+    }
+
+    public get expiryDateColor(): 'error' | 'primary' {
+        return this.product.willExpireSoon ? 'error' : 'primary';
     }
 
     public get expireInDays(): number {
         return this._calculateDaysBetweenExpiryAndNow();
     }
-
-    private _calculateDaysBetweenExpiryAndNow() {
-        const currentDate = new Date(Date.now()).getTime();
-        
-        const expiryDate = this.expiryDate.getTime();
-        
-        return expiryDate - currentDate;
-    }
 }
-
 
 export function useProductProvider() {
     const repository = getRepository(Product);
 
-    const {user} = useContext(UserContext);
-    const getAllProductsForUser = (userUid: string = user.uid, limit?: number) => {
+    const getAllProductsForUser = (userUid: string, limit: number = 100) => {
+        console.log(userUid);
         return from(repository.limit(limit).whereEqualTo('createdById', userUid).find());
     }
 
@@ -51,5 +62,5 @@ export function useProductProvider() {
         return from(repository.create(product));
     }
 
-    return {getAllProductsForUser, createProduct};
+    return { getAllProductsForUser, createProduct };
 }

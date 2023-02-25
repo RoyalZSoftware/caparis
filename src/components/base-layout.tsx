@@ -1,8 +1,9 @@
 import { Component } from "react";
-import { Image, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import WelcomeLogo from '../assets/welcome-logo.png';
 import Document from '../assets/icons/Document.png';
 import { theme } from "../infrastructure/theme";
+import Button from "./button";
 
 export function IconButton() {
     return (
@@ -43,15 +44,18 @@ export class WithHeader extends Component<{ headerChild: any }> {
 }
 
 export default function BaseLayout(props: { headerChild?: any, children?: any }) {
-    
-    const emptyHeader = {headerChild: <></>};
-
-    const header = new WithHeader(emptyHeader);
+    const header = new WithHeader({headerChild: props.headerChild ?? <></>});
 
     return (<View style={{ backgroundColor: '#F2F2F2', height: '100%' }}>
         {header.render()}
         <View style={{ margin: 20 }}>
             {props.children}
+        </View>
+
+        <View style={{position: "absolute", bottom: 48, marginLeft: 'auto', justifyContent: 'center', width: '100%'}}>
+            <Button title={'Scan product'} onPress={() => {
+                alert('OK')
+            }}></Button>
         </View>
     </View>);
 }

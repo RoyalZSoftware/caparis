@@ -19,7 +19,7 @@ export default function Inventory() {
 
     const refreshProductList = () => {
         if (auth.user)
-            productProvider.getAllProductsForUser(auth.user)
+            productProvider.getAllProductsForUser(auth.user.uid)
                 .subscribe((products) => {
                     setAllProducts(products);
                     setLoading(false);
@@ -30,7 +30,7 @@ export default function Inventory() {
         const product = new Product();
 
         product.name = name;
-        product.barcodeIdentifier = "BarCodeIdentifier";
+        product.productIdentifier = "BarCodeIdentifier";
         product.expiryDate = expiryDate;
         product.createdById = auth.user.uid;
 

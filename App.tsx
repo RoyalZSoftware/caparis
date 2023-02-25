@@ -8,6 +8,7 @@ import { useCustomFonts } from './src/infrastructure/use-fonts';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
 import HomeScreen from './src/screens/home';
+import AuthGuard from './src/screens/auth-guard';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -27,7 +28,9 @@ export default function App() {
   return (
     <View onLayout={onLayoutRootView}>
       <UserContextProvider>
-        <HomeScreen></HomeScreen>
+        <AuthGuard>
+          <HomeScreen></HomeScreen>
+        </AuthGuard>
       </UserContextProvider>
     </View>
   );

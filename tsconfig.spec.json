@@ -3,7 +3,8 @@
     "extends": "./tsconfig.json",
     "compilerOptions": {
         "jsx": "react-jsx",
-        "types": ["@testing-library/jest-dom"]
+        "types": ["node", "jest", "@testing-library/jest-native"],
+        "experimentalDecorators": true
     },
     "include": [
         "./jest-setup.ts"
