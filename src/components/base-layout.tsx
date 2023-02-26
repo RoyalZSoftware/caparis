@@ -1,61 +1,35 @@
-import { Component } from "react";
-import { Image, Text, View } from "react-native";
-import WelcomeLogo from '../assets/welcome-logo.png';
-import Document from '../assets/icons/Document.png';
-import { theme } from "../infrastructure/theme";
+import React, { Component } from "react";
+import { View } from "react-native";
 import Button from "./button";
+import { Header, HeaderProps, HeaderWithChild } from "./header";
 
-export function IconButton() {
-    return (
-        <View style={{backgroundColor: theme.colors.primary + '32', padding: theme.spacing.s, borderRadius: theme.borderRadius.m}}>
-
-            <Image style={{ width: 24, height: 24 }} source={Document}></Image>
-        </View>
-    );
-}
-
-
-export class WithHeader extends Component<{ headerChild: any }> {
+export class BaseLayoutBuilder extends Component<{ children?: React.ReactFragment, header?: Header<HeaderProps> }> {
 
     render() {
         return (
-            <View style={{ width: '100%' }}>
-
-                <View style={{
-                    backgroundColor: '#273139', width: '100%', borderBottomLeftRadius: 15, borderBottomRightRadius: 15,
-                    justifyContent: "center", padding: 20, paddingVertical: 60, paddingBottom: 100
-                }}>
-                    <View style={{ justifyContent: 'space-between', alignContent: 'center', flexDirection: 'row' }}>
-                        <Image source={WelcomeLogo} style={{ height: 43, width: 134, display: 'flex' }} />
-                        <IconButton></IconButton>
-                    </View>
+            <View style={{ backgroundColor: '#F2F2F2', height: '100%' }}>
+                {this.props.header.render()}
+                <View style={{ margin: 20 }}>
+                    {this.props.children}
                 </View>
-                <View style={{ position: 'relative' }}>
-                    <View style={{ top: -70, width: '100%', marginBottom: -70 }}>
-                        <View style={{ marginHorizontal: 20 }}>
-                            {this.props.headerChild}
-                        </View>
-                    </View>
-                </View>
-            </View>
 
-        );
+                <View style={{ position: "absolute", bottom: 48, marginLeft: 'auto', justifyContent: 'center', width: '100%' }}>
+                    <Button title={'Scan product'} onPress={() => {
+                        alert('OK')
+                    }}></Button>
+                </View>
+            </View>)
     }
+
 }
 
 export default function BaseLayout(props: { headerChild?: any, children?: any }) {
-    const header = new WithHeader({headerChild: props.headerChild ?? <></>});
+    let header = new Header({});
 
-    return (<View style={{ backgroundColor: '#F2F2F2', height: '100%' }}>
-        {header.render()}
-        <View style={{ margin: 20 }}>
-            {props.children}
-        </View>
+    if (props.headerChild)
+        header = new HeaderWithChild({headerChild: props.headerChild})
 
-        <View style={{position: "absolute", bottom: 48, marginLeft: 'auto', justifyContent: 'center', width: '100%'}}>
-            <Button title={'Scan product'} onPress={() => {
-                alert('OK')
-            }}></Button>
-        </View>
-    </View>);
+    const baseLayoutBuilder = new BaseLayoutBuilder({header, children: props.children});
+
+    return baseLayoutBuilder.render();
 }
