@@ -8,10 +8,9 @@ import { ExpireNextProductListItem, RecipeListItem } from "../components/product
 import { Text } from "../components/text";
 import { ExpireNextWidget } from "../components/widgets/expire-next";
 
-export default function HomeScreen() {
-
+const getProducts = () => {
     const [products, setProducts] = useState([]);
-
+    
     const { user } = useContext(UserContext);
     const { getAllProductsForUser } = useProductProvider();
 
@@ -19,6 +18,13 @@ export default function HomeScreen() {
         getAllProductsForUser(user.uid).subscribe(retrievedProducts => {
             setProducts(retrievedProducts)});
     }, [])
+
+    return products;
+}
+
+export default function HomeScreen() {
+
+    const products = getProducts();
 
     return (
         <BaseLayout headerChild={
