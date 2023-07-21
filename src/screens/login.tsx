@@ -1,9 +1,8 @@
 import { Formik } from "formik";
-import { useEffect } from "react";
 import { View, Text } from "react-native";
 import Button from "../components/button";
 import Input from "../components/input";
-import useFirebaseAuth from "../data-provider/firebase-auth";
+import useFirebaseAuth from "../fireorm/firebase-auth";
 
 import Inventory from "./inventory";
 
@@ -17,7 +16,7 @@ export default function LoginScreen() {
     if (auth.user?.email === undefined)
         return (
             <Formik
-                initialValues={{ email: '' }}
+                initialValues={{ email: '', password: '' }}
                 onSubmit={values => submitPressed(values)}>
                 {({ handleChange, handleBlur, handleSubmit, values }) => (
 

@@ -1,21 +1,21 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import auth from '@react-native-firebase/auth';
 import { from, tap } from "rxjs";
-import { UserContext } from "../infrastructure/user-context";
+import { useDependencies } from "../infrastructure/deps";
 
 export default function useFirebaseAuth() {
     const [initializing, setInitializing] = useState(true);
 
-    const {user, setUser} = useContext(UserContext);
+    const {userRepository} = useDependencies();
 
     auth().onAuthStateChanged((user) => {
-        setUser(user);
+        userRepository.currentUser = user;
         if (initializing) setInitializing(false);
     });
 
     const signIn = (email, password) => {
         return from(auth().signInWithEmailAndPassword(email, password)).pipe(tap((userResponse) => {
-            setUser(userResponse.user);
+            userRepository.currentUser = userResponse.user;
         }));
     }
 
@@ -23,5 +23,5 @@ export default function useFirebaseAuth() {
         return from(auth().signOut());
     }
 
-    return {signIn, user, initializing, signOut};
+    return {signIn, user: userRepository.currentUser, initializing, signOut};
 }

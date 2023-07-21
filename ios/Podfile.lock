@@ -612,6 +612,11 @@ PODS:
   - DoubleConversion (1.1.6)
   - EXApplication (5.0.1):
     - ExpoModulesCore
+  - EXBarCodeScanner (12.1.0):
+    - EXImageLoader
+    - ExpoModulesCore
+    - ZXingObjC/OneD
+    - ZXingObjC/PDF417
   - EXConstants (14.0.2):
     - ExpoModulesCore
   - EXErrorRecovery (4.0.1):
@@ -620,6 +625,9 @@ PODS:
     - ExpoModulesCore
   - EXFont (11.0.1):
     - ExpoModulesCore
+  - EXImageLoader (4.0.0):
+    - ExpoModulesCore
+    - React-Core
   - Expo (47.0.13):
     - ExpoModulesCore
   - ExpoAdapterGoogleSignIn (9.0.2):
@@ -1120,15 +1128,22 @@ PODS:
     - GoogleSignIn (~> 6.2)
     - React-Core
   - Yoga (1.14.0)
+  - ZXingObjC/Core (3.6.5)
+  - ZXingObjC/OneD (3.6.5):
+    - ZXingObjC/Core
+  - ZXingObjC/PDF417 (3.6.5):
+    - ZXingObjC/Core
 
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXApplication (from `../node_modules/expo-application/ios`)
+  - EXBarCodeScanner (from `../node_modules/expo-barcode-scanner/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
   - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
+  - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
   - Expo (from `../node_modules/expo`)
   - "ExpoAdapterGoogleSignIn (from `../node_modules/@react-native-google-signin/google-signin/expo/ios`)"
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
@@ -1198,6 +1213,7 @@ SPEC REPOS:
     - Libuv-gRPC
     - nanopb
     - PromisesObjC
+    - ZXingObjC
 
 EXTERNAL SOURCES:
   boost:
@@ -1206,6 +1222,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   EXApplication:
     :path: "../node_modules/expo-application/ios"
+  EXBarCodeScanner:
+    :path: "../node_modules/expo-barcode-scanner/ios"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
   EXErrorRecovery:
@@ -1214,6 +1232,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-file-system/ios"
   EXFont:
     :path: "../node_modules/expo-font/ios"
+  EXImageLoader:
+    :path: "../node_modules/expo-image-loader/ios"
   Expo:
     :path: "../node_modules/expo"
   ExpoAdapterGoogleSignIn:
@@ -1300,10 +1320,12 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   EXApplication: 097fc9f58dd3921d7ce3f64157978a3523652a84
+  EXBarCodeScanner: 9294309d3d9f8511c1e5972f986588d9e2bcc7bd
   EXConstants: dc7a16230c5815fa80ed70b3a09aa7f2e2a94be3
   EXErrorRecovery: 2f378e5c9aaaab8b09179da65080d958721f8a36
   EXFileSystem: 509903f11b97b25b54d8f449d5c1fc49cb2172f4
   EXFont: 955655aa111e20756af96d7c5c0b23add0cdc303
+  EXImageLoader: 2457c9c38b2bc012b05c408aac3aa8de4147b602
   Expo: bdf852f46647982fbda24197e648a9d490759be9
   ExpoAdapterGoogleSignIn: 5dd99fa014b020ab001a4929b7329f3445997f21
   ExpoKeepAwake: f8aae9b3d48116f253418cde831cf71af424d563
@@ -1362,6 +1384,7 @@ SPEC CHECKSUMS:
   RNFBFirestore: acc94fe644f02ea746bc0e0bb9016f5ce548abdf
   RNGoogleSignin: c1b1b68a6f15c7cfbd3debbd1bdd605344c05652
   Yoga: eca980a5771bf114c41a754098cd85e6e0d90ed7
+  ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
 PODFILE CHECKSUM: 3ad431cc833f7c6a28044300960eaff4b14daada
 

@@ -1,25 +1,22 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import { ExitStatus } from "typescript";
 import Button from "../components/button";
 import List from "../components/list";
-import { ProductListItem } from "../components/product-list-item";
-import useFirebaseAuth from "../data-provider/firebase-auth";
-import { Product, useProductProvider } from "../data-provider/models/product";
+import { Product } from "../core/product";
+import { useDependencies } from "../infrastructure/deps";
 
 export default function Inventory() {
 
     const [loading, setLoading] = useState(true);
 
-    const auth = useFirebaseAuth();
-
-    const productProvider = useProductProvider();
+    const {productRepository, userRepository} = useDependencies();
+    const user = userRepository.currentUser;
 
     const [allProducts, setAllProducts] = useState([]);
 
     const refreshProductList = () => {
-        if (auth.user)
-            productProvider.getAllProductsForUser(auth.user.uid)
+        if (user)
+            productRepository.getProductsForUser(user.uid)
                 .subscribe((products) => {
                     setAllProducts(products);
                     setLoading(false);
@@ -32,9 +29,9 @@ export default function Inventory() {
         product.name = name;
         product.productIdentifier = "BarCodeIdentifier";
         product.expiryDate = expiryDate;
-        product.createdById = auth.user.uid;
+        product.createdById = user.uid;
 
-        productProvider.createProduct(product).subscribe(() => {
+        productRepository.createProduct(product).subscribe(() => {
             refreshProductList();
         });
     }
@@ -46,7 +43,7 @@ export default function Inventory() {
     return (
         <View>
             <Button onPress={() => createProduct('Testprodukt', new Date())} title={"New"}></Button>
-            <List items={allProducts.map(product => new ProductListItem(product))}></List>
+            <List items={allProducts}></List>
         </View>
     );
 

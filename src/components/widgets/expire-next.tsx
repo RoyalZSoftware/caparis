@@ -1,5 +1,5 @@
 import { FlatList, Text, View } from "react-native";
-import { Product } from "../../data-provider/models/product";
+import { Product } from "../../core/product";
 import { ExpireNextProductListItem } from "../product-list-item";
 import { Widget } from "./widget";
 

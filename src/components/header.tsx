@@ -1,7 +1,7 @@
 import WelcomeLogo from '../assets/welcome-logo.png';
 import { Component } from "react";
 import { Image, View } from "react-native";
-import { theme } from '../infrastructure/theme';
+import { theme } from './theme';
 import Document from '../assets/icons/Document.png';
 
 function IconButton() {

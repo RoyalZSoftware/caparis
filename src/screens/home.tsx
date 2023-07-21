@@ -1,21 +1,19 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
-import { useProductProvider } from "../data-provider/models/product";
-import { theme } from "../infrastructure/theme";
-import { UserContext } from "../infrastructure/user-context";
+import { theme } from "../components/theme";
 import BaseLayout from "../components/base-layout";
-import { ExpireNextProductListItem, RecipeListItem } from "../components/product-list-item";
+import { ExpireNextProductListItem } from "../components/product-list-item";
 import { Text } from "../components/text";
 import { ExpireNextWidget } from "../components/widgets/expire-next";
+import { useDependencies } from "../infrastructure/deps";
 
 const getProducts = () => {
     const [products, setProducts] = useState([]);
     
-    const { user } = useContext(UserContext);
-    const { getAllProductsForUser } = useProductProvider();
+    const { productRepository, userRepository } = useDependencies();
 
     useEffect(() => {
-        getAllProductsForUser(user.uid).subscribe(retrievedProducts => {
+        productRepository.getProductsForUser(userRepository.currentUser.uid).subscribe(retrievedProducts => {
             setProducts(retrievedProducts)});
     }, [])
 

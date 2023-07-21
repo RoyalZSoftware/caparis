@@ -1,10 +1,9 @@
 import { Image, View } from "react-native";
-import { Product } from "../data-provider/models/product";
+import { Product } from "../core/product";
 import { ListItem } from "./list";
 import WelcomeLogo from '../assets/welcome-logo.png';
 import { Text } from "./text";
-import { theme } from "../infrastructure/theme";
-import { Recipe } from "../data-provider/models/recipe";
+import { theme } from "./theme";
 import { formatDistanceToNow } from "date-fns";
 
 export class ProductListItemBase extends ListItem<Product> {
@@ -25,8 +24,6 @@ export class ProductListItemBase extends ListItem<Product> {
 
 export class ExpireNextProductListItem extends ProductListItemBase {
     render() {
-        console.log(this.props.item);
-        
         const { item } = this.props;
 
         return (
@@ -43,24 +40,6 @@ export class ExpireNextProductListItem extends ProductListItemBase {
                             <Text color={item.decorate().expiryDateColor} type='default'>{formatDistanceToNow(item.expiryDate)}</Text>
                         </View>
                     </View>
-                </View>
-            </View>
-        );
-    }
-}
-
-export class RecipeListItem extends ListItem<Recipe> {
-    
-
-    render() {
-        const color: 'primary' | 'error' = 'error';
-        
-        return (
-            <View style={{ marginBottom: 10 }}>
-                <View style={{ backgroundColor: theme.colors.white, borderRadius: 8, padding: theme.spacing.l, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Text type='listItem' style={{ marginRight: theme.spacing.s }}>{this.props.item.name}</Text>
-
-                    <Text type='listItem' color={color}>2/3</Text>
                 </View>
             </View>
         );

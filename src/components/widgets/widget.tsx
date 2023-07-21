@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { theme } from "../../infrastructure/theme";
+import { theme } from "../theme";
 import { Text } from "../text";
 
 
