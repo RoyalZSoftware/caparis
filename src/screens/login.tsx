@@ -3,25 +3,30 @@ import { View, Text } from "react-native";
 import BaseLayout from "../components/base-layout";
 import Button from "../components/button";
 import Input from "../components/input";
-import useFirebaseAuth from "../fireorm/firebase-auth";
+import { useDependencies } from "../infrastructure/deps";
+import { EmailPasswordLoginProvider } from '../infrastructure/user-repository';
+
+function isEmailLoginEnabled(userRepository): userRepository is EmailPasswordLoginProvider {
+    return (userRepository as EmailPasswordLoginProvider).signInWithEmailAndPassword != undefined;
+}
 
 export default function LoginScreen() {
+    const { userRepository } = useDependencies();
 
-    const auth = useFirebaseAuth();
+    if (!isEmailLoginEnabled(userRepository))
+        return <Text>No Login flow enabled.</Text>
 
     const submitPressed = (values) => {
-        auth.signIn('panov@royalzsoftware.de', 'test123');
+        userRepository.signInWithEmailAndPassword('panov@royalzsoftware.de', 'test12345678');
     }
-    if (auth.user?.email === undefined)
+    if (userRepository.currentUser?.email === undefined)
         return (
             <BaseLayout>
                 <Formik
                     initialValues={{ email: '', password: '' }}
                     onSubmit={values => submitPressed(values)}>
                     {({ handleChange, handleBlur, handleSubmit, values }) => (
-
                         <View>
-
                             <Input placeholder='email' onChangeText={handleChange('email')} onBlur={handleBlur('email')} value={values.email}></Input>
                             <Input placeholder='password' onChangeText={handleChange('password')} onBlur={handleBlur('password')} value={values.password}></Input>
                             <Button onPress={handleSubmit} title={'Sign in'}></Button>
@@ -33,8 +38,8 @@ export default function LoginScreen() {
 
     return (
         <View>
-            <Button onPress={() => auth.signOut()} title={'Sign out'}></Button>
-            <Text>{auth.user?.email ?? 'Nicht angemeldet'}</Text>
+            <Button onPress={() => userRepository.signOut()} title={'Sign out'}></Button>
+            <Text>{userRepository.currentUser?.email ?? 'Nicht angemeldet'}</Text>
         </View>);
 
 }

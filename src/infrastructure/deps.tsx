@@ -1,11 +1,12 @@
 import { createContext, useContext, useState } from "react";
-import { FireProductRepository } from "../fireorm/fire-product-repository";
+import { AppwriteProductRepository } from "../appwrite/appwrite-product-repository";
+import { AppWriteUserRepository } from "../appwrite/appwrite-user-repository";
 import { ProductRepository } from "./product-repository";
-import { UserRepository } from "./user-repository";
+import { EmailPasswordLoginProvider, UserRepository } from "./user-repository";
 
 type Dependencies = {
     productRepository: ProductRepository,
-    userRepository: UserRepository,
+    userRepository: UserRepository | UserRepository & EmailPasswordLoginProvider,
 };
 
 const DataLayerContext = createContext<Dependencies>({
@@ -14,8 +15,8 @@ const DataLayerContext = createContext<Dependencies>({
 });
 
 export function DataLayerContextProvider({children}) {
-    const [productRepository] = useState(new FireProductRepository());
-    const [userRepository] = useState<UserRepository>({currentUser: null});
+    const [productRepository] = useState(new AppwriteProductRepository("products", "products"));
+    const [userRepository] = useState<UserRepository>(new AppWriteUserRepository());
 
     return <DataLayerContext.Provider value={{productRepository, userRepository}}>{children}</DataLayerContext.Provider>;
 }

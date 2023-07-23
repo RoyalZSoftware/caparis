@@ -1,14 +1,20 @@
 import { differenceInDays} from 'date-fns';
-import { Collection, Ignore } from 'fireorm';
-import { UserScopedModel } from "./user-scoped";
 
-@Collection('Products')
-export class Product extends UserScopedModel {
+export class Product {
     public id: string;
     public name: string;
     public productIdentifier: string;
     public expiryDate: Date;
     public quantity: number;
+    createdById: string;
+
+    constructor(createdById: string, name: string, quantity: number, productIdentifier: string = null, expiryDate: Date = null) {
+        this.createdById = createdById;
+        this.name = name;
+        this.productIdentifier = productIdentifier;
+        this.expiryDate = expiryDate;
+        this.quantity = quantity;
+    }
 
     public willExpireSoon(): boolean {
         return this._calculateDaysBetweenExpiryAndNow() <= 3;

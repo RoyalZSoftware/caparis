@@ -3,6 +3,7 @@ import { Text } from "react-native";
 import BaseLayout from "../components/base-layout";
 import Button from "../components/button";
 import List from "../components/list";
+import { ExpireNextProductListItem, ProductListItemBase } from "../components/product-list-item";
 import { Product } from "../core/product";
 import { useDependencies } from "../infrastructure/deps";
 
@@ -19,18 +20,13 @@ export default function Inventory() {
         if (user)
             productRepository.getProductsForUser(user.uid)
                 .subscribe((products) => {
-                    setAllProducts(products);
+                    setAllProducts(products.map(c => new ExpireNextProductListItem({item: c})));
                     setLoading(false);
                 });
     }
 
     const createProduct = (name: string, expiryDate: Date) => {
-        const product = new Product();
-
-        product.name = name;
-        product.productIdentifier = "BarCodeIdentifier";
-        product.expiryDate = expiryDate;
-        product.createdById = user.uid;
+        const product = new Product(user.uid, name, 10, '', expiryDate);
 
         productRepository.createProduct(product).subscribe(() => {
             refreshProductList();
@@ -43,7 +39,7 @@ export default function Inventory() {
 
     return (
         <BaseLayout>
-            <Button onPress={() => createProduct('Testprodukt', new Date())} title={"New"}></Button>
+            <Button onPress={() => createProduct('Nix', new Date())} title={"New"}></Button>
             <List items={allProducts}></List>
         </BaseLayout>
     );
