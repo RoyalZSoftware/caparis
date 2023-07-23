@@ -1,7 +1,11 @@
 import { differenceInDays} from 'date-fns';
 
+export class ProductId {
+    constructor(public value: string) {}
+}
+
 export class Product {
-    public id: string;
+    public id: ProductId;
     public name: string;
     public productIdentifier: string;
     public expiryDate: Date;

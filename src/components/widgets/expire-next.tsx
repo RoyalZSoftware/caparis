@@ -14,7 +14,7 @@ export function ExpireNextWidget({ expireNext }: { expireNext: Product[] }) {
                         renderItem={
                             ({ item }: { item: Product }) => <ExpireNextProductListItem item={item}></ExpireNextProductListItem>
                         }
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item.id.value}
                     ></FlatList>
                 }
             </View>

@@ -1,13 +1,12 @@
 import { Observable } from "rxjs";
-import { Product } from "../core/product";
+import { Product, ProductId } from "../core/product";
 
-export class ProductId {
-    constructor(public id: string) { }
-}
+export type UpdateProductPayload = Omit<Product, 'id'>;
 
 export interface ProductRepository {
     getProducts(): Observable<Product[]>;
     getProductsForUser(userId: string): Observable<Product[]>;
     createProduct(dto: Product): Observable<Product>;
-    updateProduct(productId: ProductId, dto: Omit<Product, 'id'>): Observable<boolean>;
+    updateProduct(productId: ProductId, dto: UpdateProductPayload): Observable<boolean>;
+    deleteProduct(productId: ProductId): Observable<void>;
 }
