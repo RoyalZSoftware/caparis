@@ -12,7 +12,6 @@ export interface ListProperties<T> {
 export default function List<T>({items}: ListProperties<T>) {
     return (
         <View>
-            {items?.map(c => c.render())}
         </View>
     );
 }

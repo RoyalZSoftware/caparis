@@ -13,11 +13,11 @@ const DataLayerContext = createContext<Dependencies>({
     userRepository: null,
 });
 
-export function DataLayerContextProvider() {
+export function DataLayerContextProvider({children}) {
     const [productRepository] = useState(new FireProductRepository());
     const [userRepository] = useState<UserRepository>({currentUser: null});
 
-    return <DataLayerContext.Provider value={{productRepository, userRepository}}></DataLayerContext.Provider>;
+    return <DataLayerContext.Provider value={{productRepository, userRepository}}>{children}</DataLayerContext.Provider>;
 }
 
 export function useDependencies() {

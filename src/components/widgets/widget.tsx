@@ -2,7 +2,6 @@ import { View } from "react-native";
 import { theme } from "../theme";
 import { Text } from "../text";
 
-
 export function Widget({title, children}: {title, children}) {
 
     return (

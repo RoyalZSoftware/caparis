@@ -1,7 +1,6 @@
 import { Text } from "react-native";
-import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useEffect, useState } from "react";
-import { from } from "rxjs";
+import { of } from "rxjs";
 import BaseLayout from "../components/base-layout";
 
 export interface ScannerScreenConfiguration {
@@ -20,8 +19,8 @@ const canUseBarCodeScanner = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        from(BarCodeScanner.requestPermissionsAsync()).subscribe(({ status }) => {
-            setHasPermission(status === 'granted');
+        of(0).subscribe(() => {
+            setHasPermission('granted');
             setLoading(false);
         })
     }, []);
@@ -42,10 +41,8 @@ export default function ScannerScreen(props: ScannerScreenConfiguration) {
     }
 
     return (
-        <BaseLayout headerChild={
-            <BarCodeScanner testID={'scanner'} onBarCodeScanned={({ data }) => props.barcodeScanned(data)}></BarCodeScanner>
-        }>
-            
+        <BaseLayout>
+        <Text>Scanner Page</Text>
         </BaseLayout>
     );
 }

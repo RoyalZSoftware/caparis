@@ -1,11 +1,10 @@
-import { useContext } from "react";
-import { UserContext } from "../infrastructure/user-context";
+import { useDependencies } from "../infrastructure/deps";
 import LoginScreen from "./login";
 
 export default function AuthGuard({children}) {
-    const {user} = useContext(UserContext);
+    const {userRepository} = useDependencies();
 
-    if (user == undefined) return (<LoginScreen></LoginScreen>);
+    if (userRepository.currentUser == undefined) return (<LoginScreen></LoginScreen>);
 
     return children;
 }

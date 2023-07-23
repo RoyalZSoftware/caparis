@@ -1,6 +1,8 @@
 import { differenceInDays} from 'date-fns';
+import { Collection, Ignore } from 'fireorm';
 import { UserScopedModel } from "./user-scoped";
 
+@Collection('Products')
 export class Product extends UserScopedModel {
     public id: string;
     public name: string;
@@ -8,7 +10,7 @@ export class Product extends UserScopedModel {
     public expiryDate: Date;
     public quantity: number;
 
-    public get willExpireSoon(): boolean {
+    public willExpireSoon(): boolean {
         return this._calculateDaysBetweenExpiryAndNow() <= 3;
     }
 
@@ -16,11 +18,11 @@ export class Product extends UserScopedModel {
         return differenceInDays(this.expiryDate, new Date(Date.now())) + 1;
     }
 
-    public get expiryDateColor(): 'error' | 'primary' {
+    public expiryDateColor(): 'error' | 'primary' {
         return this.willExpireSoon ? 'error' : 'primary';
     }
 
-    public get expireInDays(): number {
+    public expireInDays(): number {
         return this._calculateDaysBetweenExpiryAndNow();
     }
 }

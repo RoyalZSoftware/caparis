@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
+import BaseLayout from "../components/base-layout";
 import Button from "../components/button";
 import List from "../components/list";
 import { Product } from "../core/product";
@@ -10,7 +11,7 @@ export default function Inventory() {
     const [loading, setLoading] = useState(true);
 
     const {productRepository, userRepository} = useDependencies();
-    const user = userRepository.currentUser;
+    const user = userRepository?.currentUser;
 
     const [allProducts, setAllProducts] = useState([]);
 
@@ -41,10 +42,10 @@ export default function Inventory() {
     if (loading) return (<Text>Loading..</Text>);
 
     return (
-        <View>
+        <BaseLayout>
             <Button onPress={() => createProduct('Testprodukt', new Date())} title={"New"}></Button>
             <List items={allProducts}></List>
-        </View>
+        </BaseLayout>
     );
 
 }
