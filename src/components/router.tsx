@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useDependencies } from "../infrastructure/deps";
 import HomeScreen from "../screens/home";
+import { InventoryScreen } from "../screens/inventory";
 import LoginScreen from "../screens/login";
 
 const routes = [{
@@ -22,7 +23,7 @@ export function RouterContextProvider({children}) {
             setCurrentUrl('/login');
         }
         if (currentUrl == '/login' && userRepository.currentUser != undefined) {
-            setCurrentUrl('/home');
+            setCurrentUrl('/inventory');
         }
     }, [currentUrl])
 
@@ -33,6 +34,6 @@ export function Router() {
     const {currentUrl} = useContext(RouterContext);
 
     return <>
-    {currentUrl == '/login' ? <LoginScreen></LoginScreen> : <HomeScreen></HomeScreen>}
+    {currentUrl == '/login' ? <LoginScreen></LoginScreen> : <InventoryScreen></InventoryScreen>}
     </>;
 }

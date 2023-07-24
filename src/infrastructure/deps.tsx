@@ -16,8 +16,7 @@ const DataLayerContext = createContext<Dependencies>({
 });
 
 export function DataLayerContextProvider({children}) {
-    // const [productRepository] = useState(new AppwriteProductRepository("products", "products"));
-    const [productRepository] = useState(new DummyProductRepository());
+    const [productRepository] = useState(new AppwriteProductRepository("products", "products"));
     const [userRepository] = useState<UserRepository>(new AppWriteUserRepository());
 
     return <DataLayerContext.Provider value={{productRepository, userRepository}}>{children}</DataLayerContext.Provider>;

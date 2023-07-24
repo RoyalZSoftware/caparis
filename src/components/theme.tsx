@@ -29,7 +29,9 @@ export interface BorderRadiusConfigurations {
     xl: number;
 }
 
-export interface SpacingConfigurations extends BorderRadiusConfigurations { }
+export interface SpacingConfigurations extends BorderRadiusConfigurations {
+    sm: number;
+}
 
 export type ThemeConfiguration = {
     colors: ColorConfigurations,
@@ -54,6 +56,7 @@ export const theme: ThemeConfiguration = {
     },
     spacing: {
         s: 8,
+        sm: 12,
         m: 16,
         l: 24,
         xl: 40

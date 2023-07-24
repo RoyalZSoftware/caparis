@@ -37,7 +37,7 @@ export class ExpireNextProductListItem extends ProductListItemBase {
 
                         <View style={{ display: 'flex', flexDirection: 'row' }}>
                             <Text type='default' style={{ opacity: 0.5 }}>Exp: </Text>
-                            <Text color={item.expiryDateColor()} type='default'>{formatDistanceToNow(item.expiryDate)}</Text>
+                            <Text color={item.expiryDateColor()} type='default'>{formatDistanceToNow(item.expiryDate ?? new Date())}</Text>
                         </View>
                     </View>
                 </View>
