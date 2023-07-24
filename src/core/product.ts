@@ -7,10 +7,12 @@ export class ProductId {
 export class Product {
     public id: ProductId;
     public name: string;
-    public productIdentifier: string;
-    public expiryDate: Date;
     public quantity: number;
-    createdById: string;
+    public createdById: string;
+
+    public expiryDate?: Date;
+    public productIdentifier?: string;
+    public imageUrl?: string;
 
     constructor(createdById: string, name: string, quantity: number, productIdentifier: string = null, expiryDate: Date = null) {
         this.createdById = createdById;

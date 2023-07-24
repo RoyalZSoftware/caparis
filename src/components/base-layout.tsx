@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { View } from "react-native";
-import Button from "./button";
+import { Pressable, Text, View } from "react-native";
 import { Header, HeaderProps, HeaderWithChild } from "./header";
+import { theme } from "./theme";
 
 export class BaseLayoutBuilder extends Component<{ children?: React.ReactFragment, header?: Header<HeaderProps> }> {
 
@@ -13,10 +13,18 @@ export class BaseLayoutBuilder extends Component<{ children?: React.ReactFragmen
                     {this.props.children}
                 </View>
 
-                <View style={{ position: "absolute", bottom: 48, marginLeft: 'auto', justifyContent: 'center', width: '100%' }}>
-                    <Button title={'Scan product'} onPress={() => {
+                <View style={{ position: "absolute", bottom: 48, marginLeft: 'auto', justifyContent: 'center', alignSelf: 'center'}}>
+                    <Pressable style={{
+                        backgroundColor: theme.colors.primary,
+                        padding: theme.spacing.m,
+                        paddingLeft: theme.spacing.xl,
+                        paddingRight: theme.spacing.xl,
+                        display: 'flex',
+                        borderRadius: 50,
+                        alignContent: 'center'
+                    }} onPress={() => {
                         alert('OK')
-                    }}></Button>
+                    }}><Text style={{...theme.fonts.primary, color: theme.colors.background}}>Add Products</Text></Pressable>
                 </View>
             </View>)
     }

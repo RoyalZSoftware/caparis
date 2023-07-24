@@ -1,35 +1,19 @@
-import { useEffect, useState } from "react";
-import { FlatList } from "react-native";
-import { theme } from "../components/theme";
+import { Text } from "react-native";
 import BaseLayout from "../components/base-layout";
+import List from "../components/list";
 import { ExpireNextProductListItem } from "../components/product-list-item";
-import { Text } from "../components/text";
+import { theme } from "../components/theme";
 import { ExpireNextWidget } from "../components/widgets/expire-next";
-import { useDependencies } from "../infrastructure/deps";
-
-const getProducts = () => {
-    const [products, setProducts] = useState([]);
-    
-    const { productRepository, userRepository } = useDependencies();
-
-    useEffect(() => {
-        productRepository.getProductsForUser(userRepository.currentUser.uid).subscribe(retrievedProducts => {
-            setProducts(retrievedProducts)});
-    }, [])
-
-    return products;
-}
+import { useFilterProducts } from "../use-cases/filter-products";
 
 export default function HomeScreen() {
-
-    const products = getProducts();
+    const {fetchedProducts, loading} = useFilterProducts();
 
     return (
-        <BaseLayout headerChild={
-            <ExpireNextWidget expireNext={products.filter(product => product.willExpireSoon)}></ExpireNextWidget>
-        }>
-            <Text type='default' style={{ marginBottom: theme.spacing.m }}>Start cooking with this ingredients today</Text>
-            <FlatList data={products.sort(c => c.expiryDate)} renderItem={(({ item }) => <ExpireNextProductListItem item={item}></ExpireNextProductListItem>)}></FlatList>
+        <BaseLayout headerChild={<ExpireNextWidget expireNext={fetchedProducts}></ExpireNextWidget>}>
+            <Text style={{...theme.fonts.filter, padding: theme.spacing.s}}>Recipes with expiring food</Text>
+            <List loading={loading} items={fetchedProducts.map(c => new ExpireNextProductListItem({item: c}))}></List>
         </BaseLayout>
-    )
+    );
+
 }

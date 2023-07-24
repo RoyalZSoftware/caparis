@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { AppwriteProductRepository } from "../appwrite/appwrite-product-repository";
 import { AppWriteUserRepository } from "../appwrite/appwrite-user-repository";
+import { DummyProductRepository } from "../dummy/dummy-product-repository";
 import { ProductRepository } from "./product-repository";
 import { EmailPasswordLoginProvider, UserRepository } from "./user-repository";
 
@@ -15,7 +16,8 @@ const DataLayerContext = createContext<Dependencies>({
 });
 
 export function DataLayerContextProvider({children}) {
-    const [productRepository] = useState(new AppwriteProductRepository("products", "products"));
+    // const [productRepository] = useState(new AppwriteProductRepository("products", "products"));
+    const [productRepository] = useState(new DummyProductRepository());
     const [userRepository] = useState<UserRepository>(new AppWriteUserRepository());
 
     return <DataLayerContext.Provider value={{productRepository, userRepository}}>{children}</DataLayerContext.Provider>;
