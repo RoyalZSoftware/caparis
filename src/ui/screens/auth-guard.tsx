@@ -1,4 +1,4 @@
-import { useDependencies } from "../infrastructure/deps";
+import { useDependencies } from "../../infrastructure/deps";
 import LoginScreen from "./login";
 
 export default function AuthGuard({children}) {

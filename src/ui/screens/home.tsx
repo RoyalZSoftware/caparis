@@ -4,7 +4,7 @@ import List from "../components/list";
 import { ExpireNextProductListItem } from "../components/product-list-item";
 import { theme } from "../components/theme";
 import { ExpireNextWidget } from "../components/widgets/expire-next";
-import { useFilterProducts } from "../use-cases/filter-products";
+import { useFilterProducts } from "../../use-cases/filter-products";
 
 export default function HomeScreen() {
     const {fetchedProducts, loading} = useFilterProducts();

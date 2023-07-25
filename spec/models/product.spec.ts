@@ -1,5 +1,5 @@
 import { addDays } from "date-fns";
-import { ProductListItemBase } from "../../src/components/product-list-item";
+import { ProductListItemBase } from "../../src/ui/components/product-list-item";
 import { Product } from "../../src/data-provider/models/product";
 
 const defineProductFactory = () => {

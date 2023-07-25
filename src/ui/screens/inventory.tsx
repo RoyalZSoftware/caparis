@@ -4,7 +4,7 @@ import BaseLayout from "../components/base-layout";
 import List from "../components/list";
 import { ExpireNextProductListItem } from "../components/product-list-item";
 import { theme } from "../components/theme";
-import { useFilterProducts } from "../use-cases/filter-products";
+import { useFilterProducts } from "../../use-cases/filter-products";
 
 function useFilterBar() {
     const [query, setQuery] = useState('');

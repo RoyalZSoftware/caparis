@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react-native";
-import ScannerScreen from "../../src/screens/scanner";
+import ScannerScreen from "../../src/ui/screens/scanner";
 
 describe('ScanScreen', () => {
     it('ScanScreen renders', () => {

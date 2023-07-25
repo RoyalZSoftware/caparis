@@ -1,5 +1,5 @@
 import { Image, View } from "react-native";
-import { Product } from "../core/product";
+import { Product } from "../../core/product";
 import { ListItem } from "./list";
 import WelcomeLogo from '../assets/welcome-logo.png';
 import { Text } from "./text";

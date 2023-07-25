@@ -3,8 +3,8 @@ import { View, Text } from "react-native";
 import BaseLayout from "../components/base-layout";
 import Button from "../components/button";
 import Input from "../components/input";
-import { useDependencies } from "../infrastructure/deps";
-import { EmailPasswordLoginProvider } from '../infrastructure/user-repository';
+import { useDependencies } from "../../infrastructure/deps";
+import { EmailPasswordLoginProvider } from '../../infrastructure/user-repository';
 
 function isEmailLoginEnabled(userRepository): userRepository is EmailPasswordLoginProvider {
     return (userRepository as EmailPasswordLoginProvider).signInWithEmailAndPassword != undefined;

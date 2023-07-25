@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useDependencies } from "../infrastructure/deps";
+import { useDependencies } from "../../infrastructure/deps";
 import HomeScreen from "../screens/home";
 import { InventoryScreen } from "../screens/inventory";
 import LoginScreen from "../screens/login";

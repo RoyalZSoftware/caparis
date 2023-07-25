@@ -1,6 +1,6 @@
 import { Observable, of } from "rxjs";
-import { Product, ProductId } from "../core/product";
-import { ProductRepository, UpdateProductPayload } from "../infrastructure/product-repository";
+import { Product, ProductId } from "../../src/core/product";
+import { ProductRepository, UpdateProductPayload } from "../../src/infrastructure/product-repository";
 
 export class DummyProductRepository implements ProductRepository {
     getProducts(): Observable<Product[]> {
