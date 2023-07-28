@@ -1,0 +1,22 @@
+{
+  "name": "@caparis/appwrite",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "dependencies": {
+    "@caparis/core": "file:../core",
+    "appwrite": "^11.0.0",
+    "rxjs": "^7.8.1",
+    "typescript": "^4.6.3"
+  },
+  "author": "IJustDev",
+  "license": "ISC"
+}
