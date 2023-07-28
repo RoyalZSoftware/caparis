@@ -3,25 +3,25 @@ export function PresenceValidator(c: any) {
         throw new Error("Field is not present.");
 }
 
-export function LengthValidator(minLength: number = undefined, maxLength: number = undefined) {
-    return <T extends {length: number}>(c: T) => {
-        if (!!minLength && c.length < minLength)
+export function BoundsValidator(minLength: number = undefined, maxLength: number = undefined) {
+    return (c: number) => {
+        if (!!minLength && c < minLength)
             throw new Error("Field has to be at least " + minLength + " long.");
-        if (!!maxLength && c.length > maxLength)
+        if (!!maxLength && c > maxLength)
             throw new Error("Field can't exceed " + minLength);
     }
 }
 
 export class GuardClause<T> {
-    constructor(public predicate: (c: T) => any, public validators: ((c: any) =>any)[]) {
+    constructor(public predicate: (c: T) => any, public validators: ((c: any) => any)[]) {
     }
 
     public validate(c: T) {
         this.validators.forEach((validate) => {
             const value = this.predicate(c);
             try {
-                validate(this.predicate(c));
-            } catch(e) {
+                validate(value);
+            } catch (e) {
                 e.message = this.predicate.toString() + ": " + e.message;
                 throw e;
             }

@@ -1,5 +1,5 @@
 import { differenceInDays} from 'date-fns';
-import { Guardable, GuardClause, LengthValidator, PresenceValidator } from './validation';
+import { BoundsValidator, Guardable, GuardClause, PresenceValidator } from './validation';
 
 export class ProductId {
     constructor(public value: string) {}
@@ -9,8 +9,8 @@ export class Product extends Guardable<Product> {
 
     get guards(): GuardClause<Product>[] {
         return [
-            new GuardClause(c => c.name, [PresenceValidator, LengthValidator(2, 180)]),
-            // new GuardClause(c => c.quantity, [PresenceValidator, LengthValidator(1, 999)]),
+            new GuardClause(c => c.name.length, [PresenceValidator, BoundsValidator(2, 180)]),
+            new GuardClause(c => c.quantity, [PresenceValidator, BoundsValidator(1, 999)]),
             new GuardClause(c => c.createdById, [PresenceValidator]),
         ];
     }
@@ -35,11 +35,7 @@ export class Product extends Guardable<Product> {
     }
 
     public willExpireSoon(): boolean {
-        return this._calculateDaysBetweenExpiryAndNow() <= 3;
-    }
-
-    protected _calculateDaysBetweenExpiryAndNow(): number {
-        return differenceInDays(this.expiryDate, new Date(Date.now())) + 1;
+        return this.expireInDays() <= 3;
     }
 
     public expiryDateColor(): 'error' | 'primary' {
@@ -48,5 +44,9 @@ export class Product extends Guardable<Product> {
 
     public expireInDays(): number {
         return this._calculateDaysBetweenExpiryAndNow();
+    }
+
+    private _calculateDaysBetweenExpiryAndNow(): number {
+        return differenceInDays(this.expiryDate, new Date(Date.now())) + 1;
     }
 }

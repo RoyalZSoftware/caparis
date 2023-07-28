@@ -12,7 +12,7 @@ export {
 } from './repositories/product-repository';
 
 export {
-    UserRepository, EmailPasswordLoginProvider, canSignInWithEmailAndPassword
+    UserRepository, AuthProvider
 } from './repositories/user-repository';
 
 export  {

@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
-    "test": "jest"
+    "test": "jest --maxWorkers=1 src/**/*.spec.ts"
   },
   "dependencies": {
     "date-fns": "^2.29.3",
