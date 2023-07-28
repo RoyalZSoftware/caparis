@@ -1,10 +1,20 @@
 import { differenceInDays} from 'date-fns';
+import { Guardable, GuardClause, LengthValidator, PresenceValidator } from './validation';
 
 export class ProductId {
     constructor(public value: string) {}
 }
 
-export class Product {
+export class Product extends Guardable<Product> {
+
+    get guards(): GuardClause<Product>[] {
+        return [
+            new GuardClause(c => c.name, [PresenceValidator, LengthValidator(2, 180)]),
+            // new GuardClause(c => c.quantity, [PresenceValidator, LengthValidator(1, 999)]),
+            new GuardClause(c => c.createdById, [PresenceValidator]),
+        ];
+    }
+
     public id: ProductId;
     public name: string;
     public quantity: number;
@@ -15,11 +25,13 @@ export class Product {
     public imageUrl?: string;
 
     constructor(createdById: string, name: string, quantity: number, productIdentifier: string = null, expiryDate: Date = null) {
+        super();
         this.createdById = createdById;
         this.name = name;
         this.productIdentifier = productIdentifier;
         this.expiryDate = expiryDate;
         this.quantity = quantity;
+        this.guard();
     }
 
     public willExpireSoon(): boolean {
