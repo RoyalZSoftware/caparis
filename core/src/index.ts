@@ -8,7 +8,7 @@ export {
 } from './models/user';
 
 export {
-    ProductRepository, UpdateProductPayload
+    ProductRepository, UpdateProductPayload, ProductFilter
 } from './repositories/product-repository';
 
 export {

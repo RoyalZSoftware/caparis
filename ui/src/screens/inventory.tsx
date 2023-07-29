@@ -29,10 +29,10 @@ function FilterChip({ children, style }: { children: any, style?: any }) {
 
 export function InventoryScreen() {
     const [fetchedProducts, setFetchedProducts] = useState([]);
-    const [query, setQuery] = useState('');
+    const [query, setQuery] = useState();
 
     useEffect(() => {
-        useFilterProducts('').subscribe((products) => {
+        useFilterProducts(query).subscribe((products) => {
             setFetchedProducts(products);
         });
     }, [query]);

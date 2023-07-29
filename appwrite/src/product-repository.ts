@@ -1,6 +1,6 @@
 import { ID, Query } from "appwrite";
 import { from, map, Observable, of, tap } from "rxjs";
-import { Product, ProductId, ProductRepository, UpdateProductPayload } from "@caparis/core";
+import { Product, ProductId, ProductRepository, UpdateProductPayload, ProductFilter } from "@caparis/core";
 import { AppWriteClient } from "./appwrite";
 
 class SimpleCache<T> {
@@ -35,11 +35,32 @@ export class AppwriteProductRepository implements ProductRepository {
         return from(AppWriteClient.provider().database.deleteDocument(this._databaseId, this._collectionId, productId.value)).pipe(map(void 0));
     }
     getProducts(): Observable<Product[]> {
+        return this.filterProducts({ query: '', sort: 'ASC' });
+    }
+    getProductsForUser(userId: string): Observable<Product[]> {
+        throw new Error('Not implemented');
+    }
+    createProduct(dto: Product): Observable<any> {
+        return from(AppWriteClient.provider().database.createDocument(this._databaseId, this._collectionId, ID.unique(), dto));
+    }
+    updateProduct(productId: ProductId, alteredProduct: UpdateProductPayload): Observable<boolean> {
+        throw new Error("Test");
+    }
+
+    filterProducts(productFilter: ProductFilter): Observable<Product[]> {
         if (this._cache.isValid()) {
             return of(this._cache.items);
         }
-        return from(AppWriteClient.provider().database.listDocuments(this._databaseId, this._collectionId, [
+        
+        const filter = [
             Query.orderAsc("name"),
+        ];
+
+        if (productFilter.query) {
+            filter.push(Query.equal("name", productFilter.query));
+        }
+
+        return from(AppWriteClient.provider().database.listDocuments(this._databaseId, this._collectionId, [
         ])).pipe(
             map(c => c.documents.map(
                 document => {
@@ -54,14 +75,5 @@ export class AppwriteProductRepository implements ProductRepository {
                 this._cache.items = items;
             }),
         );
-    }
-    getProductsForUser(userId: string): Observable<Product[]> {
-        throw new Error('Not implemented');
-    }
-    createProduct(dto: Product): Observable<any> {
-        return from(AppWriteClient.provider().database.createDocument(this._databaseId, this._collectionId, ID.unique(), dto));
-    }
-    updateProduct(productId: ProductId, alteredProduct: UpdateProductPayload): Observable<boolean> {
-        throw new Error("Test");
     }
 }

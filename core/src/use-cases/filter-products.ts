@@ -5,5 +5,5 @@ import { Product } from "../models/product";
 export function useFilterProducts(query: string): Observable<Product[]> {
     const {productRepository} = Context.Dependencies;
 
-    return productRepository.getProducts();
+    return productRepository.filterProducts({query, sort: 'DESC'});
 }
