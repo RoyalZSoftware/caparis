@@ -1,9 +1,9 @@
 import { ProductRepository } from "./repositories/product-repository";
-import { EmailPasswordLoginProvider, UserRepository } from "./repositories/user-repository";
+import { UserRepository } from "./repositories/user-repository";
 
 export type Dependencies = {
     productRepository: ProductRepository,
-    userRepository: UserRepository | UserRepository & EmailPasswordLoginProvider,
+    userRepository: UserRepository,
 };
 
 export class Context {
