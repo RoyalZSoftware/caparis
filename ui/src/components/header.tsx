@@ -3,7 +3,7 @@ import { Component } from "react";
 import { Image, Pressable, View } from "react-native";
 import { theme } from './theme';
 import Document from '../assets/icons/Document.png';
-import { useRouter } from './router';
+import { useRouter } from '../smart-components/router';
 
 function IconButton() {
     return (

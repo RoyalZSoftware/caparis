@@ -1,6 +1,6 @@
 import { View } from "react-native";
-import { theme } from "../theme";
-import { Text } from "../text";
+import { theme } from "../../components/theme";
+import { Text } from "../../components/text";
 
 export function Widget({title, children}: {title, children}) {
 
@@ -12,4 +12,3 @@ export function Widget({title, children}: {title, children}) {
 
     );
 }
-

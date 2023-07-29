@@ -6,9 +6,9 @@ import { AppWriteDependencies } from '@caparis/appwrite';
 
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
-import { Router, RouterContextProvider } from './src/components/router';
+import { Router, RouterContextProvider } from './src/smart-components/router';
 import { DataLayerContextProvider } from './src/hooks/data-layer-context';
-import { useCustomFonts } from './src/components/use-fonts';
+import { useCustomFonts } from './src/hooks/use-fonts';
 
 SplashScreen.preventAutoHideAsync();
 

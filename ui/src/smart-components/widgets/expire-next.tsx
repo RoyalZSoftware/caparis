@@ -1,5 +1,5 @@
+import { Product } from "@caparis/core";
 import { FlatList, Text, View } from "react-native";
-import { Product } from "../../../core/src/models/product";
 import { ExpireNextProductListItem } from "../product-list-item";
 import { Widget } from "./widget";
 

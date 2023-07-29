@@ -10,9 +10,9 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@caparis/core": "file:../core",
-    "@caparis/appwrite": "file:../appwrite",
     "@babel/preset-env": "^7.20.2",
+    "@caparis/appwrite": "file:../appwrite",
+    "@caparis/core": "file:../core",
     "@expo/webpack-config": "^0.17.2",
     "@react-native-firebase/app": "^16.5.0",
     "@react-native-firebase/auth": "^16.5.0",
@@ -21,6 +21,7 @@
     "@types/react": "~18.0.24",
     "@types/react-native": "~0.70.6",
     "class-validator": "^0.14.0",
+    "date-fns": "^2.30.0",
     "expo": "~47.0.12",
     "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",

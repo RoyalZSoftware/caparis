@@ -4,7 +4,7 @@ import { UserRepository } from "@caparis/core";
 import { AppWriteClient } from "./appwrite";
 
 export class AppWriteUsernamePasswordLogin implements AuthProvider<{email: string, password: string}> {
-    name: string = "username";
+    name: string = "Username and Password";
     
     signIn({email, password}: {email: string, password: string}) {
         return AppWriteClient.login(email, password).pipe(
@@ -14,6 +14,18 @@ export class AppWriteUsernamePasswordLogin implements AuthProvider<{email: strin
                 email: c.provider,
             }))
         );
+    }
+}
+
+export class AppWriteGoogleLogin implements AuthProvider<string> {
+    name: string = "Google";
+    
+    public createSignInUrl() {
+        return AppWriteClient.sdk.account.createOAuth2Session('google');
+    }
+
+    signIn(responseToken: string): Observable<User> {
+        return of();
     }
 }
 
@@ -30,9 +42,9 @@ export class AppWriteUserRepository implements UserRepository {
     authProvider() {
         return [
             new AppWriteUsernamePasswordLogin(),
-            new AppWriteUsernamePasswordLogin(),
+            new AppWriteGoogleLogin()
         ];
     }
-    currentUser$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+    currentUser$: BehaviorSubject<User> = new BehaviorSubject<User>({uid: '', displayName: 'Panov', email: 'test@gm.com'});
     signOut: () => Observable<void>;
 }

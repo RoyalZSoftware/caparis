@@ -24,7 +24,7 @@ export function RouterContextProvider({children}) {
                 return '/login';
             }
             if (currentUrl == '/login' && userRepository.currentUser$.value != undefined) {
-                return '/home';
+                return '/inventory';
             }
             return null;
         }

@@ -1,56 +1,55 @@
-import { Context } from "@caparis/core";
-import { Formik } from "formik";
+import { AuthProvider, Context } from "@caparis/core";
 import { useState } from "react";
-import { Pressable, Text, View } from "react-native";
-import BaseLayout from "../components/base-layout";
+import { Image, SafeAreaView, Text, View } from "react-native";
+import { AppWriteGoogleSignIn } from "../appwrite-related/google-sign-in";
+import { AppWriteUsernamePasswordLogin } from "../appwrite-related/username-password-login";
 import Button from "../components/button";
-import Input from "../components/input";
-import { useRouter } from "../components/router";
+import { theme } from "../components/theme";
+import Fridge from '../assets/fridge.png';
 
-export default function LoginScreen() {
-
-    const {userRepository} = Context.Dependencies;
-
-    const [step, setStep] = useState(0);
-    
-    if (step == 0) {
-        return <BaseLayout>
-        {userRepository.authProvider().map(c => {
-        return (<Pressable onPress={() => {
-            setStep(1);
-        }}>
-        <Text>Sign In With {c.name}</Text>
-        </Pressable>)
-
-        })}
-        </BaseLayout>;
-    }
-
-    return (
-        <BaseLayout>
-            <AppWriteUsernamePasswordLogin></AppWriteUsernamePasswordLogin>
-        </BaseLayout>
-    );
+const findAuthScreen = (authProvider: AuthProvider<any>) => {
+    const signInFlows = {
+        AppWriteUsernamePasswordLogin: () => AppWriteUsernamePasswordLogin({ authProvider }),
+        AppWriteGoogleLogin: () => AppWriteGoogleSignIn({ authProvider }),
+    };
+    return signInFlows[authProvider.constructor.name];
 }
 
-export function AppWriteUsernamePasswordLogin() {
+export default function LoginScreen() {
     const { userRepository } = Context.Dependencies;
-    const { setCurrentUrl } = useRouter();
 
-    const submitPressed = (values) => {
-        userRepository.authProvider()[0].signIn({ email: "panov@royalzsoftware.de", password: "test12345678" }).subscribe(() => {
-            setCurrentUrl('/home');
-        });
-    }
-    return (<Formik
-        initialValues={{ email: '', password: '' }}
-        onSubmit={values => submitPressed(values)}>
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
-            <View>
-                <Input placeholder='email' onChangeText={handleChange('email')} onBlur={handleBlur('email')} value={values.email}></Input>
-                <Input placeholder='password' onChangeText={handleChange('password')} onBlur={handleBlur('password')} value={values.password}></Input>
-                <Button onPress={handleSubmit} title={'Sign in'}></Button>
+    const [authProvider, setAuthProvider] = useState<AuthProvider<any>>(null);
+
+    if (authProvider == null) {
+        return <SafeAreaView style={{ display: 'flex', flexDirection: 'column' }}>
+            <View style={{ flexBasis: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 1 }}>
+                <Image style={{ height: '70%', aspectRatio: 1 / 1 }} source={Fridge}></Image>
+                <View style={{ margin: theme.spacing.m }}>
+
+                    <Text style={{ ...theme.fonts.pageTitle }}>Welcome to Caparis</Text>
+                    <Text >
+                        Please sign in to continue
+                    </Text>
+                </View>
             </View>
-        )}
-    </Formik>);
+
+            <View style={{ display: 'flex', flexBasis: '10%', minHeight: 100, margin: theme.spacing.xl }}>
+
+                {userRepository.authProvider().map(c => {
+                    return <View style={{ marginBottom: theme.spacing.s }}>
+                        <Button onPress={() => setAuthProvider(c)} title={c.name}></Button>
+                    </View>
+                })}
+            </View>
+
+        </SafeAreaView>;
+    }
+
+    const AuthScreen = findAuthScreen(authProvider);
+
+    return (
+        <SafeAreaView>
+            <AuthScreen></AuthScreen>
+        </SafeAreaView>
+    );
 }

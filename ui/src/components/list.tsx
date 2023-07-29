@@ -6,7 +6,7 @@ export abstract class ListItem<T> extends Component<{item: T}> {
 }
 
 export interface ListProperties<T> {
-    items: ListItem<any>[];
+    items: ListItem<T>[];
     loading: boolean;
 };
 

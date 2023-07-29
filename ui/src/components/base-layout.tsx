@@ -7,9 +7,11 @@ export class BaseLayoutBuilder extends Component<{ children?: React.ReactFragmen
 
     render() {
         return (
-            <View style={{ backgroundColor: '#F2F2F2', height: '100%' }}>
+            <View style={{ backgroundColor: theme.colors.background, height: '100%', maxHeight: '100%' }}>
+                <View style={{display: 'flex'}}>
                 {this.props.header.render()}
-                <View style={{ margin: 20 }}>
+</View>
+                <View style={{display: 'flex', margin: 20, flexGrow: 2}}>
                     {this.props.children}
                 </View>
 

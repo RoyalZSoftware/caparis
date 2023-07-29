@@ -1,25 +1,24 @@
 import { useEffect, useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import BaseLayout from "../components/base-layout";
-import List from "../components/list";
 import { useFilterProducts } from "@caparis/core";
-import { ExpireNextProductListItem } from "../components/product-list-item";
+import { InventoryListItem } from "../smart-components/product-list-item";
 import { theme } from "../components/theme";
+import Input from "../components/input";
 
-function useFilterBar() {
+function FilterBar({ onChange }) {
     const [query, setQuery] = useState('');
 
-    return {
-        query, Component: () => <TextInput value={query} onChangeText={val => setQuery(val)} style={{
-            ...theme.fonts.primary,
-            borderRadius: 50,
-            backgroundColor: theme.colors.background,
-            height: 50,
-            borderWidth: 2,
-            borderColor: theme.colors.secondary,
-            padding: theme.spacing.m
-        }} placeholder={'Search product'}></TextInput>
-    };
+    return <Input value={query} onChangeText={val => setQuery(val)} style={{
+        ...theme.fonts.primary,
+        borderRadius: 50,
+        backgroundColor: theme.colors.background,
+        height: 50,
+        borderWidth: 2,
+        borderColor: theme.colors.secondary,
+        padding: theme.spacing.m
+    }} placeholder={'Search product'}></Input>;
+
 }
 
 function FilterChip({ children, style }: { children: any, style?: any }) {
@@ -30,22 +29,19 @@ function FilterChip({ children, style }: { children: any, style?: any }) {
 
 export function InventoryScreen() {
     const [fetchedProducts, setFetchedProducts] = useState([]);
-    const { setCurrentFilter, loading } = {
-        setCurrentFilter: () => { },
-        loading: false,
-    }
-
-    const { Component: FilterBar, query } = useFilterBar();
+    const [query, setQuery] = useState('');
 
     useEffect(() => {
-        useFilterProducts(query).subscribe((products) => {
+        useFilterProducts('').subscribe((products) => {
             setFetchedProducts(products);
         });
     }, [query]);
 
     const filter = ['All', 'Use Now', 'Vegan', 'Non-Vegan'];
 
-    return <BaseLayout headerChild={<FilterBar></FilterBar>}>
+    return <BaseLayout headerChild={<FilterBar onChange={(quer) => {
+        setQuery(quer);
+    }}></FilterBar>}>
         <Text style={{ ...theme.fonts.listItem, padding: theme.spacing.s }}>Filter list by</Text>
         <View style={{ display: 'flex', flexDirection: 'row' }}>
             {filter.map(c =>
@@ -53,6 +49,8 @@ export function InventoryScreen() {
             )}
         </View>
         <Text style={{ ...theme.fonts.listItem, padding: theme.spacing.s, marginTop: theme.spacing.m }}>All Inventory List</Text>
-        <List loading={loading} items={fetchedProducts.map(c => new ExpireNextProductListItem({ item: c }))}></List>
+        <ScrollView style={{height: 0, display: 'flex'}}>
+            {fetchedProducts.map(c => <InventoryListItem product={c}></InventoryListItem>)}
+        </ScrollView>
     </BaseLayout>
 }
