@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Pressable, Text, View } from "react-native";
 import { Header, HeaderProps, HeaderWithChild } from "./header";
-import { theme } from "./theme";
+import { theme } from "@caparis/ui-components";
 
 export class BaseLayoutBuilder extends Component<{ children?: React.ReactFragment, header?: Header<HeaderProps> }> {
 

@@ -1,9 +1,7 @@
 import { Formik } from "formik";
 import { View } from "react-native";
-import Button from "../components/button";
-import Input from "../components/input";
 import { useRouter } from "../smart-components/router";
-import { theme } from "../components/theme";
+import { theme, Input, Button } from "@caparis/ui-components";
 
 export function AppWriteUsernamePasswordLogin({authProvider}) {
     const { setCurrentUrl } = useRouter();

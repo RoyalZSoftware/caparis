@@ -7,6 +7,7 @@ module.exports = {
     watchFolders: [
         path.resolve(__dirname, '../core'),
         path.resolve(__dirname, '../appwrite'),
+        path.resolve(__dirname, '../ui-components'),
     ],
     resolver: {
         extraNodeModules: new Proxy(

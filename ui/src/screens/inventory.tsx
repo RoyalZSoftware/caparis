@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import BaseLayout from "../components/base-layout";
+import BaseLayout from "../smart-components/base-layout";
 import { useFilterProducts } from "@caparis/core";
 import { InventoryListItem } from "../smart-components/product-list-item";
-import { theme } from "../components/theme";
-import Input from "../components/input";
+import { theme, Input } from "@caparis/ui-components";
 
 function FilterBar({ onChange }) {
     const [query, setQuery] = useState('');

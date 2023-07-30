@@ -1,4 +1,4 @@
-import Button from "../components/button";
+import Button from "../../../ui-components/src/button";
 
 export function AppWriteGoogleSignIn({authProvider}: {authProvider: AppWriteGoogleLogin}) {
     return <Button onPress={() => {

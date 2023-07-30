@@ -1,9 +1,9 @@
 import WelcomeLogo from '../assets/welcome-logo.png';
-import { Component } from "react";
+import React, { Component } from "react";
 import { Image, Pressable, View } from "react-native";
-import { theme } from './theme';
+import { theme } from '@caparis/ui-components';
 import Document from '../assets/icons/Document.png';
-import { useRouter } from '../smart-components/router';
+import { useRouter } from './router';
 
 function IconButton() {
     return (

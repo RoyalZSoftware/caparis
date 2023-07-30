@@ -3,8 +3,7 @@ import { useState } from "react";
 import { Image, SafeAreaView, Text, View } from "react-native";
 import { AppWriteGoogleSignIn } from "../appwrite-related/google-sign-in";
 import { AppWriteUsernamePasswordLogin } from "../appwrite-related/username-password-login";
-import Button from "../components/button";
-import { theme } from "../components/theme";
+import { theme, Button } from "@caparis/ui-components";
 import Fridge from '../assets/fridge.png';
 
 const findAuthScreen = (authProvider: AuthProvider<any>) => {

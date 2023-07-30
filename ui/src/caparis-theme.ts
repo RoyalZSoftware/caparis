@@ -1,46 +1,6 @@
-export interface FontConfiguration {
-    fontSize: number;
-    fontWeight?: '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | 'bold';
-    fontFamily: string;
-}
+import { ThemeConfiguration } from "@caparis/ui-components/src/theme";
 
-export interface FontConfigurations {
-    pageTitle: FontConfiguration;
-    primary: FontConfiguration;
-    default: FontConfiguration;
-    listItem: FontConfiguration;
-    listItemAdditionalData: FontConfiguration;
-    filter: FontConfiguration;
-    action: FontConfiguration;
-}
-
-export interface ColorConfigurations {
-    background: string;
-    white: string;
-    secondary: string;
-    primary: string;
-    error: string;
-};
-
-export interface BorderRadiusConfigurations {
-    s: number;
-    m: number;
-    l: number;
-    xl: number;
-}
-
-export interface SpacingConfigurations extends BorderRadiusConfigurations {
-    sm: number;
-}
-
-export type ThemeConfiguration = {
-    colors: ColorConfigurations,
-    fonts: FontConfigurations,
-    borderRadius: BorderRadiusConfigurations,
-    spacing: SpacingConfigurations
-};
-
-export const theme: ThemeConfiguration = {
+export const caparisTheme: ThemeConfiguration = {
     colors: {
         background: '#F2F2F2',
         white: '#FFF',

@@ -1,11 +1,9 @@
 import { Image, View } from "react-native";
-import { ListItem } from "../components/list";
 import WelcomeLogo from '../assets/welcome-logo.png';
-import { Text } from "../components/text";
-import { theme } from "../components/theme";
 import { formatDistanceToNow } from "date-fns";
 import { Product } from "@caparis/core";
 import Barcode from '../assets/fridge.png';
+import { ListItem, theme } from "@caparis/ui-components";
 
 export class ProductListItemBase extends ListItem<Product> {
 

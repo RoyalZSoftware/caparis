@@ -1,9 +1,9 @@
 import { useFilterProducts } from "@caparis/core";
 import { useEffect, useState } from "react";
 import { ScrollView, Text } from "react-native";
-import BaseLayout from "../components/base-layout";
+import BaseLayout from "../smart-components/base-layout";
 import { ExpireNextProductListItem } from "../smart-components/product-list-item";
-import { theme } from "../components/theme";
+import { theme } from "@caparis/ui-components";
 import { ExpireNextWidget } from "../smart-components/widgets/expire-next";
 
 export default function HomeScreen() {
