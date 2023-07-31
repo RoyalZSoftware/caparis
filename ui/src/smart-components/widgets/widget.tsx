@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { theme, Text } from "@caparis/ui-components";
+import { theme, Text } from "@caparis/ui-components/src";
 
 export function Widget({title, children}: {title, children}) {
 

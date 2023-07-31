@@ -1,13 +1,11 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "isolatedModules": true,
-    "module": "ESNext",
+    "module": "commonjs",
     "target": "es2015",
-    "declaration": true,
-    "outDir": "./dist",
     "jsx": "react-native",
-    "skipLibCheck": true
+    "declaration": true,
+    "outDir": "./dist"
   },
   "include": ["src/**/*"]
 }

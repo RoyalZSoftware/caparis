@@ -1,7 +1,7 @@
 import WelcomeLogo from '../assets/welcome-logo.png';
 import React, { Component } from "react";
 import { Image, Pressable, View } from "react-native";
-import { theme } from '@caparis/ui-components';
+import { theme } from '@caparis/ui-components/src';
 import Document from '../assets/icons/Document.png';
 import { useRouter } from './router';
 

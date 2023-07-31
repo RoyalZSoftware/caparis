@@ -45,6 +45,6 @@ export class AppWriteUserRepository implements UserRepository {
             new AppWriteGoogleLogin()
         ];
     }
-    currentUser$: BehaviorSubject<User> = new BehaviorSubject<User>({} as any);
+    currentUser$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
     signOut: () => Observable<void>;
 }

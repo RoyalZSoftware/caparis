@@ -3,7 +3,7 @@ import WelcomeLogo from '../assets/welcome-logo.png';
 import { formatDistanceToNow } from "date-fns";
 import { Product } from "@caparis/core";
 import Barcode from '../assets/fridge.png';
-import { ListItem, theme } from "@caparis/ui-components";
+import { ListItem, Text, theme } from "@caparis/ui-components/src";
 
 export class ProductListItemBase extends ListItem<Product> {
 

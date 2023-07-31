@@ -3,7 +3,7 @@ import { Pressable, ScrollView, Text, View } from "react-native";
 import BaseLayout from "../smart-components/base-layout";
 import { useFilterProducts } from "@caparis/core";
 import { InventoryListItem } from "../smart-components/product-list-item";
-import { theme, Input } from "@caparis/ui-components";
+import { theme, Input } from "@caparis/ui-components/src";
 
 function FilterBar({ onChange }) {
     const [query, setQuery] = useState('');

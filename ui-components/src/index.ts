@@ -1,5 +1,5 @@
-export * from './button';
-export * from './theme';
-export * from './input';
-export * from './text';
-export * from './list';
+export {Button} from './button';
+export {theme} from './theme';
+export {Input} from './input';
+export {Text} from './text';
+export {ListItem, ListProperties} from './list';
