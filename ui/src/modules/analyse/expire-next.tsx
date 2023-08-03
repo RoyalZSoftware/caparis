@@ -1,7 +1,7 @@
 import { Product } from "@caparis/core";
 import { FlatList, Text, View } from "react-native";
-import { ExpireNextProductListItem } from "../product-list-item";
-import { Widget } from "./widget";
+import { ExpireNextProductListItem } from "../../shared/product-list-item";
+import { Widget } from "../../shared/widget";
 
 export function ExpireNextWidget({ expireNext }: { expireNext: Product[] }) {
 

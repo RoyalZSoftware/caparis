@@ -1,16 +1,17 @@
 import { Formik } from "formik";
 import { View } from "react-native";
-import Button from "../components/button";
-import Input from "../components/input";
-import { useRouter } from "../smart-components/router";
-import { theme } from "../components/theme";
+import Button from "../../../shared/button";
+import Input from "../../../shared/input";
+import { useRouter } from "../../../shared/router";
+import { theme } from "../../../shared/theme";
+import { moduleConfig } from "..";
 
 export function AppWriteUsernamePasswordLogin({authProvider}) {
-    const { setCurrentUrl } = useRouter();
+    const { navigateTo } = useRouter();
 
     const submitPressed = (values) => {
         authProvider.signIn({ email: "panov@royalzsoftware.de", password: "test12345678" }).subscribe(() => {
-            setCurrentUrl('/home');
+            navigateTo(moduleConfig.successfulLoginCallbackRoute);
         });
     }
     return (<Formik

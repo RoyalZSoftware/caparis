@@ -42,7 +42,6 @@ export class AppWriteUserRepository implements UserRepository {
     authProvider() {
         return [
             new AppWriteUsernamePasswordLogin(),
-            new AppWriteGoogleLogin()
         ];
     }
     currentUser$: BehaviorSubject<User> = new BehaviorSubject<User>(null);

@@ -15,6 +15,7 @@ export class DefaultProductFilter implements ProductFilter {
 
 export interface ProductRepository {
     getProducts(): Observable<Product[]>;
+    getProduct(productId: ProductId): Observable<Product | null>;
     filterProducts(productFilter: ProductFilter): Observable<Product[]>;
     getProductsForUser(userId: string): Observable<Product[]>;
     createProduct(dto: Product): Observable<Product>;

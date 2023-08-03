@@ -34,8 +34,11 @@ export class AppwriteProductRepository implements ProductRepository {
     deleteProduct(productId: ProductId): Observable<void> {
         return from(AppWriteClient.provider().database.deleteDocument(this._databaseId, this._collectionId, productId.value)).pipe(map(void 0));
     }
+    getProduct(productId: ProductId): Observable<Product | null> {
+        return from(AppWriteClient.provider().database.getDocument(this._databaseId, this._collectionId, productId.value)).pipe(map(c => this.fromDocumentToProduct(c)));
+    }
     getProducts(): Observable<Product[]> {
-        return this.filterProducts({ query: '', sort: 'ASC' });
+        return this.filterProducts({ query: '', nameSort: 'ASC'});
     }
     getProductsForUser(userId: string): Observable<Product[]> {
         throw new Error('Not implemented');
@@ -63,17 +66,20 @@ export class AppwriteProductRepository implements ProductRepository {
         return from(AppWriteClient.provider().database.listDocuments(this._databaseId, this._collectionId, [
         ])).pipe(
             map(c => c.documents.map(
-                document => {
-                    const d = document as any;
-                    const product = new Product(d.createdById, d.name, d.quantity, d.productIdentifier, new Date(d.expiryDate));
-                    product.id = new ProductId(d.$id);
-                    return product;
-                }
+                document => this.fromDocumentToProduct(document)
             )),
             tap((items) => {
                 this._cache = new SimpleCache<Product>();
                 this._cache.items = items;
             }),
         );
+    }
+
+    private fromDocumentToProduct(document: any) {
+        const d = document as any;
+        const product = new Product(d.createdById, d.name, d.quantity, d.productIdentifier, new Date(d.expiryDate));
+        product.id = new ProductId(d.$id);
+        return product;
+
     }
 }

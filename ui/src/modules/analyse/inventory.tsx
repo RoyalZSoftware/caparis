@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import BaseLayout from "../components/base-layout";
-import { useFilterProducts } from "@caparis/core";
-import { InventoryListItem } from "../smart-components/product-list-item";
-import { theme } from "../components/theme";
-import Input from "../components/input";
+import { Product, useFilterProducts } from "@caparis/core";
+import { InventoryListItem } from "../../shared/product-list-item";
+import { theme } from "../../shared/theme";
+import Input from "../../shared/input";
+import { Route, useRouter } from "../../shared/router";
+import { DetailsRoute } from "./details";
+
 
 function FilterBar({ onChange }) {
     const [query, setQuery] = useState('');
@@ -28,7 +30,8 @@ function FilterChip({ children, style }: { children: any, style?: any }) {
 }
 
 export function InventoryScreen() {
-    const [fetchedProducts, setFetchedProducts] = useState([]);
+    const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
+    const { navigateTo } = useRouter();
     const [query, setQuery] = useState();
 
     useEffect(() => {
@@ -39,9 +42,7 @@ export function InventoryScreen() {
 
     const filter = ['All', 'Use Now', 'Vegan', 'Non-Vegan'];
 
-    return <BaseLayout headerChild={<FilterBar onChange={(quer) => {
-        setQuery(quer);
-    }}></FilterBar>}>
+    return <>
         <Text style={{ ...theme.fonts.listItem, padding: theme.spacing.s }}>Filter list by</Text>
         <View style={{ display: 'flex', flexDirection: 'row' }}>
             {filter.map(c =>
@@ -49,8 +50,13 @@ export function InventoryScreen() {
             )}
         </View>
         <Text style={{ ...theme.fonts.listItem, padding: theme.spacing.s, marginTop: theme.spacing.m }}>All Inventory List</Text>
-        <ScrollView style={{height: 0, display: 'flex'}}>
-            {fetchedProducts.map(c => <InventoryListItem product={c}></InventoryListItem>)}
+        <ScrollView style={{ height: 0, display: 'flex' }}>
+            {fetchedProducts.map(c => <Pressable onPress={() => navigateTo(DetailsRoute, {product: c})}>
+                <InventoryListItem product={c}></InventoryListItem></Pressable>)}
         </ScrollView>
-    </BaseLayout>
+    </>
+}
+
+export const InventoryRoute: Route = {
+    title: 'Inventory', render: <InventoryScreen></InventoryScreen>, url: '/inventory'
 }

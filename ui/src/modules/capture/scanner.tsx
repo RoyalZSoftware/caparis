@@ -1,7 +1,7 @@
 import { Text } from "react-native";
 import { useEffect, useState } from "react";
 import { of } from "rxjs";
-import BaseLayout from "../components/base-layout";
+import { BaseLayout } from "../../shared/base-layout";
 
 export interface ScannerScreenConfiguration {
     barcodeScanned: (data: string) => void;

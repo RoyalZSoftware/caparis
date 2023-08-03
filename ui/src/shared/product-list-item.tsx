@@ -1,11 +1,10 @@
 import { Image, View } from "react-native";
-import { ListItem } from "../components/list";
+import { ListItem } from "./list";
 import WelcomeLogo from '../assets/welcome-logo.png';
-import { Text } from "../components/text";
-import { theme } from "../components/theme";
+import { Text } from "./text";
+import { theme } from "./theme";
 import { formatDistanceToNow } from "date-fns";
 import { Product } from "@caparis/core";
-import Barcode from '../assets/fridge.png';
 
 export class ProductListItemBase extends ListItem<Product> {
 
@@ -28,7 +27,7 @@ export function InventoryListItem({product}: {product: Product}) {
         {
             product.imageUrl ?
             <Image style={thumbnailStyles} source={{uri: product.imageUrl}}></Image>
-            : <Image style={thumbnailStyles} source={Barcode}></Image>
+            : <Image style={thumbnailStyles} source={null}></Image>
         }
         <View style={{marginLeft: theme.spacing.m}}>
             <Text type={'listItem'}>{product.name}</Text>

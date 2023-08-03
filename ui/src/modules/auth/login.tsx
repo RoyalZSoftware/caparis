@@ -1,16 +1,14 @@
 import { AuthProvider, Context } from "@caparis/core";
 import { useState } from "react";
 import { Image, SafeAreaView, Text, View } from "react-native";
-import { AppWriteGoogleSignIn } from "../appwrite-related/google-sign-in";
-import { AppWriteUsernamePasswordLogin } from "../appwrite-related/username-password-login";
-import Button from "../components/button";
-import { theme } from "../components/theme";
-import Fridge from '../assets/fridge.png';
+import { AppWriteUsernamePasswordLogin } from "./appwrite-related/username-password-login";
+import Button from "../../shared/button";
+import { theme } from "../../shared/theme";
+import Fridge from './fridge.png';
 
 const findAuthScreen = (authProvider: AuthProvider<any>) => {
     const signInFlows = {
         AppWriteUsernamePasswordLogin: () => AppWriteUsernamePasswordLogin({ authProvider }),
-        AppWriteGoogleLogin: () => AppWriteGoogleSignIn({ authProvider }),
     };
     return signInFlows[authProvider.constructor.name];
 }
