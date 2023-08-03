@@ -1,5 +1,5 @@
 export {
-    AppwriteProductRepository
+    AppwriteProductRepository,
 } from './product-repository';
 
 export {
@@ -7,5 +7,6 @@ export {
 } from './deps';
 
 export {
-    AppWriteUserRepository
+    AppWriteUserRepository,
+    AppWriteUsernamePasswordLogin,
 } from './user-repository';

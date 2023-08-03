@@ -3,8 +3,11 @@ import { Image, Pressable, Text, View } from "react-native";
 import { theme } from "./theme";
 import WelcomeLogo from '../assets/welcome-logo.png';
 import { IconButton } from "./icon-button";
+import { useRouter } from "./router";
 
 export function AddProductsButton() {
+    const {navigateTo} = useRouter();
+
     return <View style={{ position: "absolute", bottom: 48, marginLeft: 'auto', justifyContent: 'center', alignSelf: 'center' }}>
         <Pressable style={{
             backgroundColor: theme.colors.primary,
@@ -15,7 +18,7 @@ export function AddProductsButton() {
             borderRadius: 50,
             alignContent: 'center'
         }} onPress={() => {
-            alert('OK')
+            navigateTo('/inventory');
         }}><Text style={{ ...theme.fonts.primary, color: theme.colors.background }}>Add Products</Text></Pressable>
     </View>
 }

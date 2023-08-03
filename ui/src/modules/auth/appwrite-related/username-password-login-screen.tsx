@@ -1,17 +1,19 @@
 import { Formik } from "formik";
 import { View } from "react-native";
 import Button from "../../../shared/button";
+import { useCaparisApp } from "../../../shared/caparis-app-context";
 import Input from "../../../shared/input";
 import { useRouter } from "../../../shared/router";
 import { theme } from "../../../shared/theme";
-import { moduleConfig } from "..";
 
-export function AppWriteUsernamePasswordLogin({authProvider}) {
+export function AppWriteUsernamePasswordLoginScreen({authProvider, successfulLoginCallbackRoute}) {
     const { navigateTo } = useRouter();
+    const {userRepository} = useCaparisApp().Dependencies;
 
     const submitPressed = (values) => {
-        authProvider.signIn({ email: "panov@royalzsoftware.de", password: "test12345678" }).subscribe(() => {
-            navigateTo(moduleConfig.successfulLoginCallbackRoute);
+        authProvider.signIn({ email: "panov@royalzsoftware.de", password: "test12345678" }).subscribe((user) => {
+            userRepository.currentUser$.next(user);
+            navigateTo(successfulLoginCallbackRoute);
         });
     }
     return (<Formik

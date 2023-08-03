@@ -17,7 +17,7 @@ export {
 
 export  {
     Dependencies,
-    Context
-} from './deps';
+    CaparisApp
+} from './app';
 
 export * from './use-cases';

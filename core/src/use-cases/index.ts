@@ -1,6 +1,3 @@
-export {
-    useCreateProduct
-} from './create-product';
 
 export {
     useDeleteProduct

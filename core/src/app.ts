@@ -6,12 +6,9 @@ export type Dependencies = {
     userRepository: UserRepository,
 };
 
-export class Context {
-    private static _dependencies: Dependencies;
-    public static setup(dependencies: Dependencies) {
-        this._dependencies = dependencies;
-    }
-    public static get Dependencies(): Dependencies {
+export class CaparisApp {
+    constructor(private _dependencies: Dependencies) { }
+    public get Dependencies(): Dependencies {
         return this._dependencies;
     }
 }

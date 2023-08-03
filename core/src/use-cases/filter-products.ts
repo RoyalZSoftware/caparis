@@ -1,9 +1,9 @@
 import { Observable } from "rxjs";
-import { Context } from "../deps";
+import { CaparisApp } from "../app";
 import { Product } from "../models/product";
 
-export function useFilterProducts(query: string): Observable<Product[]> {
-    const {productRepository} = Context.Dependencies;
+export function useFilterProducts(query: string, context: CaparisApp): Observable<Product[]> {
+    const {productRepository} = context.Dependencies;
 
     return productRepository.filterProducts({query, nameSort: 'DESC'});
 }

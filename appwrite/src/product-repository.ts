@@ -1,6 +1,6 @@
 import { ID, Query } from "appwrite";
 import { from, map, Observable, of, tap } from "rxjs";
-import { Product, ProductId, ProductRepository, UpdateProductPayload, ProductFilter } from "@caparis/core";
+import { Product, ProductId, ProductRepository, UpdateProductPayload, ProductFilter, UserRepository } from "@caparis/core";
 import { AppWriteClient } from "./appwrite";
 
 class SimpleCache<T> {
@@ -25,10 +25,7 @@ class SimpleCache<T> {
 }
 
 export class AppwriteProductRepository implements ProductRepository {
-    private _cache: SimpleCache<Product> = new SimpleCache<Product>(300);
-
-    constructor(private _databaseId: string, private _collectionId: string) {
-        this._cache.invalidate();
+    constructor(private _databaseId: string, private _collectionId: string, private _userRepository: UserRepository) {
     }
 
     deleteProduct(productId: ProductId): Observable<void> {
@@ -40,9 +37,6 @@ export class AppwriteProductRepository implements ProductRepository {
     getProducts(): Observable<Product[]> {
         return this.filterProducts({ query: '', nameSort: 'ASC'});
     }
-    getProductsForUser(userId: string): Observable<Product[]> {
-        throw new Error('Not implemented');
-    }
     createProduct(dto: Product): Observable<any> {
         return from(AppWriteClient.provider().database.createDocument(this._databaseId, this._collectionId, ID.unique(), dto));
     }
@@ -51,27 +45,19 @@ export class AppwriteProductRepository implements ProductRepository {
     }
 
     filterProducts(productFilter: ProductFilter): Observable<Product[]> {
-        if (this._cache.isValid()) {
-            return of(this._cache.items);
-        }
-        
         const filter = [
             Query.orderAsc("name"),
+            Query.equal("createdById", [this._userRepository?.currentUser$?.value?.uid]),
         ];
 
         if (productFilter.query) {
             filter.push(Query.equal("name", productFilter.query));
         }
 
-        return from(AppWriteClient.provider().database.listDocuments(this._databaseId, this._collectionId, [
-        ])).pipe(
+        return from(AppWriteClient.provider().database.listDocuments(this._databaseId, this._collectionId, filter)).pipe(
             map(c => c.documents.map(
                 document => this.fromDocumentToProduct(document)
             )),
-            tap((items) => {
-                this._cache = new SimpleCache<Product>();
-                this._cache.items = items;
-            }),
         );
     }
 

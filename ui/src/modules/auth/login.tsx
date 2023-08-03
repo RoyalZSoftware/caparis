@@ -1,23 +1,27 @@
-import { AuthProvider, Context } from "@caparis/core";
+import { AuthProvider } from "@caparis/core";
 import { useState } from "react";
 import { Image, SafeAreaView, Text, View } from "react-native";
-import { AppWriteUsernamePasswordLogin } from "./appwrite-related/username-password-login";
 import Button from "../../shared/button";
 import { theme } from "../../shared/theme";
 import Fridge from './fridge.png';
+import { AppWriteUsernamePasswordLogin } from "@caparis/appwrite";
+import { AppWriteUsernamePasswordLoginScreen } from "./appwrite-related/username-password-login-screen";
+import { of, tap } from "rxjs";
+import { useRouter } from "../../shared/router";
+import { useCaparisApp } from "../../shared/caparis-app-context";
 
-const findAuthScreen = (authProvider: AuthProvider<any>) => {
-
-    const signInFlows = {
-        AppWriteUsernamePasswordLogin: () => AppWriteUsernamePasswordLogin({ authProvider }),
-    };
-    return signInFlows[authProvider.constructor.name];
+class DummyAuthProvider implements AuthProvider<void> {
+    name: string;
+    signIn() {
+        return of({email: 'Test', displayName: 'Alexander', uid: '000'});
+    }
 }
 
-export default function LoginScreen() {
-    const { userRepository } = Context.Dependencies;
-
+export default function LoginScreen({successfulLoginCallbackRoute}) {
+    const {userRepository} = useCaparisApp().Dependencies;
     const [authProvider, setAuthProvider] = useState<AuthProvider<any>>(null);
+
+    const {navigateTo} = useRouter();
 
     if (authProvider == null) {
         return <SafeAreaView style={{ display: 'flex', flexDirection: 'column' }}>
@@ -33,22 +37,25 @@ export default function LoginScreen() {
             </View>
 
             <View style={{ display: 'flex', flexBasis: '10%', minHeight: 100, margin: theme.spacing.xl }}>
-
-                {userRepository.authProvider().map(c => {
-                    return <View style={{ marginBottom: theme.spacing.s }}>
-                        <Button onPress={() => setAuthProvider(c)} title={c.name}></Button>
-                    </View>
-                })}
+                <View style={{ marginBottom: theme.spacing.s }}>
+                    <Button onPress={() => setAuthProvider(new AppWriteUsernamePasswordLogin())} title={'Username and password'}></Button>
+                </View>
+                <View style={{ marginBottom: theme.spacing.s }}>
+                    <Button onPress={() => {
+                        new DummyAuthProvider().signIn().pipe(
+                            tap((user) => {
+                            userRepository.currentUser$.next(user);
+                            navigateTo(successfulLoginCallbackRoute);
+                        })).subscribe();
+                    }} title={'Dummy'}></Button>
+                </View>
             </View>
-
         </SafeAreaView>;
     }
 
-    const AuthScreen = findAuthScreen(authProvider);
-
     return (
         <SafeAreaView>
-            <AuthScreen></AuthScreen>
+            <AppWriteUsernamePasswordLoginScreen authProvider={authProvider} successfulLoginCallbackRoute={successfulLoginCallbackRoute}></AppWriteUsernamePasswordLoginScreen>
         </SafeAreaView>
     );
 }

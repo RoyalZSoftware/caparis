@@ -9,5 +9,4 @@ export interface AuthProvider<AuthPayload> {
 export interface UserRepository {
     currentUser$: BehaviorSubject<User>;
     signOut: () => Observable<void>;
-    authProvider(): AuthProvider<any>[];
 }

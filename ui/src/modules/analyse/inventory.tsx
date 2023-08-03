@@ -4,9 +4,9 @@ import { Product, useFilterProducts } from "@caparis/core";
 import { InventoryListItem } from "../../shared/product-list-item";
 import { theme } from "../../shared/theme";
 import Input from "../../shared/input";
-import { Route, useRouter } from "../../shared/router";
-import { DetailsRoute } from "./details";
-
+import { useRouter } from "../../shared/router";
+import { useCaparisApp } from "../../shared/caparis-app-context";
+import { DetailsRoute } from "./routes";
 
 function FilterBar({ onChange }) {
     const [query, setQuery] = useState('');
@@ -31,11 +31,12 @@ function FilterChip({ children, style }: { children: any, style?: any }) {
 
 export function InventoryScreen() {
     const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
-    const { navigateTo } = useRouter();
-    const [query, setQuery] = useState();
+    const { push } = useRouter();
+    const [query] = useState();
+    const app = useCaparisApp();
 
     useEffect(() => {
-        useFilterProducts(query).subscribe((products) => {
+        useFilterProducts(query, app).subscribe((products) => {
             setFetchedProducts(products);
         });
     }, [query]);
@@ -51,12 +52,8 @@ export function InventoryScreen() {
         </View>
         <Text style={{ ...theme.fonts.listItem, padding: theme.spacing.s, marginTop: theme.spacing.m }}>All Inventory List</Text>
         <ScrollView style={{ height: 0, display: 'flex' }}>
-            {fetchedProducts.map(c => <Pressable onPress={() => navigateTo(DetailsRoute, {product: c})}>
+            {fetchedProducts.map(c => <Pressable onPress={() => push(DetailsRoute, {product: c})}>
                 <InventoryListItem product={c}></InventoryListItem></Pressable>)}
         </ScrollView>
     </>
-}
-
-export const InventoryRoute: Route = {
-    title: 'Inventory', render: <InventoryScreen></InventoryScreen>, url: '/inventory'
 }

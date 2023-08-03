@@ -1,13 +1,11 @@
 import { addRoute } from "../../shared/router";
-import { DetailsRoute } from "./details";
-import { HomeRoute } from "./home";
-import { InventoryRoute } from "./inventory";
+import { DetailsScreen } from "./details";
+import HomeScreen from "./home";
+import { InventoryScreen } from "./inventory";
+import { DetailsRoute, HomeRoute, InventoryRoute } from "./routes";
 
 export function initializeAnalyse() {
-    addRoute(InventoryRoute);
-    addRoute(HomeRoute);
-    addRoute(DetailsRoute);
+    addRoute(InventoryRoute, <InventoryScreen></InventoryScreen>)
+    addRoute(HomeRoute, <HomeScreen></HomeScreen>);
+    addRoute(DetailsRoute, <DetailsScreen></DetailsScreen>);
 }
-
-export {InventoryRoute} from './inventory';
-export {HomeRoute} from './home';

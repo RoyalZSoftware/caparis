@@ -1,20 +1,17 @@
 import { View } from 'react-native';
-import { Context } from '@caparis/core';
-import { AppWriteDependencies } from '@caparis/appwrite';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
-import { Router, RouterContextProvider, setUnauthenticatedPage } from './src/shared/router';
+import { Router, RouterContextProvider } from './src/shared/router';
 import { useCustomFonts } from './src/shared/use-fonts';
 import { initializeAuth, LoginRoute } from './src/modules/auth';
 import { initializeAnalyse } from './src/modules/analyse';
 import { initializeCapture } from './src/modules/capture';
-import { HomeRoute } from './src/modules/analyse/home';
+import { CaparisAppProvider } from './src/shared/caparis-app-context';
+import { HomeRoute } from './src/modules/analyse/routes';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  Context.setup(AppWriteDependencies('products', 'products'));
-
   const [fontsLoaded] = useCustomFonts();
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -29,13 +26,13 @@ export default function App() {
   initializeAnalyse();
   initializeCapture();
 
-  setUnauthenticatedPage(LoginRoute);
-
   return (
     <View onLayout={onLayoutRootView}>
-      <RouterContextProvider defaultRoute={HomeRoute}>
-        <Router />
-      </RouterContextProvider>
+      <CaparisAppProvider>
+        <RouterContextProvider defaultRoute={HomeRoute} unauthenticatedRoute={LoginRoute}>
+          <Router />
+        </RouterContextProvider>
+      </CaparisAppProvider>
     </View>
   );
 }
