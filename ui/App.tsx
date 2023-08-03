@@ -4,8 +4,7 @@ import { AppWriteDependencies } from '@caparis/appwrite';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
 import { Router, RouterContextProvider, setUnauthenticatedPage } from './src/shared/router';
-import { DataLayerContextProvider } from './src/hooks/data-layer-context';
-import { useCustomFonts } from './src/hooks/use-fonts';
+import { useCustomFonts } from './src/shared/use-fonts';
 import { initializeAuth, LoginRoute } from './src/modules/auth';
 import { initializeAnalyse } from './src/modules/analyse';
 import { initializeCapture } from './src/modules/capture';
@@ -26,8 +25,7 @@ export default function App() {
   if (!fontsLoaded)
     return null;
 
-
-  initializeAuth({successfulLoginCallbackRoute: HomeRoute});
+  initializeAuth({ successfulLoginCallbackRoute: HomeRoute });
   initializeAnalyse();
   initializeCapture();
 
@@ -35,11 +33,9 @@ export default function App() {
 
   return (
     <View onLayout={onLayoutRootView}>
-      <DataLayerContextProvider>
-        <RouterContextProvider defaultRoute={HomeRoute}>
-          <Router />
-        </RouterContextProvider>
-      </DataLayerContextProvider>
+      <RouterContextProvider defaultRoute={HomeRoute}>
+        <Router />
+      </RouterContextProvider>
     </View>
   );
 }

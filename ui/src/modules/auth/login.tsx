@@ -7,6 +7,7 @@ import { theme } from "../../shared/theme";
 import Fridge from './fridge.png';
 
 const findAuthScreen = (authProvider: AuthProvider<any>) => {
+
     const signInFlows = {
         AppWriteUsernamePasswordLogin: () => AppWriteUsernamePasswordLogin({ authProvider }),
     };
